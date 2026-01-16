@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Frame Loader – Custom Reload Time</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .input-area {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .row {
+      margin: 12px 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      align-items: center;
+    }
+    input[type="text"], input[type="number"] {
+      padding: 12px 16px;
+      font-size: 16px;
+      border: 2px solid #444;
+      border-radius: 8px;
+      background: #111;
+      color: white;
+      min-width: 320px;
+      max-width: 600px;
+    }
+    input[type="number"] {
+      width: 140px;
+    }
+    input:focus {
+      border-color: #0f8;
+      box-shadow: 0 0 10px #0f84;
+      outline: none;
+    }
+    button {
+      padding: 14px 40px;
+      font-size: 18px;
+      background: linear-gradient(90deg, #0f8, #0f84);
+      color: black;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      opacity: 0.92;
+      transform: scale(1.04);
+    }
+    #status {
+      margin: 20px 0;
+      font-size: 15px;
+      color: #0f8;
+      text-align: center;
+      min-height: 24px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+    }
+    iframe {
+      width: 128px;
+      height: 120px;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background: #111;
+    }
+    .warning {
+      background: #300;
+      padding: 12px;
+      border-radius: 6px;
+      margin: 20px 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 style="text-align:center; color:#0f8; margin-bottom: 24px;">
+    Load any page in 50 frames – custom reload interval
+  </h2>
+
+  <div class="input-area">
+    <div class="row">
+      <input type="text" id="urlInput" placeholder="https://example.com" value="https://trimz.ai/black-clover-devils-reckoning">
+    </div>
+
+    <div class="row">
+      <label for="intervalInput">Reload every:</label>
+      <input type="number" id="intervalInput" min="10" value="60"> seconds
+    </div>
+
+    <button onclick="loadFrames()">Load / Run in 50 Frames</button>
+  </div>
+
+  <div id="status">Ready – enter URL + interval and click Load</div>
+
+  <div class="warning">
+    • Many websites block iframes (X-Frame-Options: DENY / SAMEORIGIN or CSP frame-ancestors).<br>
+    • If the page contains no video or media, reloading won't show any playback.<br>
+    • Very short intervals (<15 s) may cause high CPU usage or browser throttling.
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<script>
+let reloadTimer = null;
+
+function loadFrames() {
+  const url = document.getElementById("urlInput").value.trim();
+  let intervalSec = parseInt(document.getElementById("intervalInput").value, 10);
+
+  if (!url || !url.startsWith("http")) {
+    alert("Please enter a valid URL (http/https)");
+    return;
+  }
+
+  if (isNaN(intervalSec) || intervalSec < 10) {
+    intervalSec = 10;
+    document.getElementById("intervalInput").value = 10;
+    alert("Minimum reload interval is 10 seconds. Adjusted to 10 s.");
+  }
+
+  const status = document.getElementById("status");
+  status.textContent = `Loading 50 frames – reload every ${intervalSec} seconds...`;
+
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+
+  for (let i = 0; i < 50; i++) {
+    const iframe = document.createElement("iframe");
+    iframe.src = url;
+    iframe.title = `Frame ${i+1}`;
+    iframe.allow = "autoplay; fullscreen";
+    grid.appendChild(iframe);
+  }
+
+  // Clear previous timer if exists
+  if (reloadTimer) {
+    clearInterval(reloadTimer);
+    reloadTimer = null;
+  }
+
+  const RELOAD_MS = intervalSec * 1000;
+
+  reloadTimer = setInterval(() => {
+    const iframes = document.querySelectorAll("iframe");
+    iframes.forEach(iframe => {
+      try {
+        if (iframe.contentWindow?.location) {
+          iframe.contentWindow.location.reload(true);
+        }
+      } catch {}
+
+      // Fallback reload method (works even when cross-origin blocked)
+      const oldSrc = iframe.src;
+      iframe.src = "about:blank";
+      setTimeout(() => {
+        iframe.src = oldSrc;
+      }, 200);
+    });
+
+    status.textContent = `Reloaded all frames – next in ${intervalSec} s (${new Date().toLocaleTimeString()})`;
+  }, RELOAD_MS);
+
+  status.textContent = `50 frames loaded – auto-reload every ${intervalSec} seconds`;
+}
+</script>
+
+</body>
+</html>
