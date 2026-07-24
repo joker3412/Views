@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Umer Hanif Inamdar | Matrimonial Biodata</title>
+    <title>Umer Hanif Inamdar | Portfolio & Biodata</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --bg-color: #0b0f19;
-            --card-bg: rgba(22, 31, 49, 0.7);
-            --border-color: rgba(212, 175, 55, 0.3);
+            --card-bg: rgba(22, 31, 49, 0.75);
+            --border-color: rgba(212, 175, 55, 0.35);
             --primary-gold: #d4af37;
             --light-gold: #f3e5ab;
             --text-light: #e2e8f0;
@@ -39,7 +39,7 @@
             position: relative;
         }
 
-        /* Animated Background Particles */
+        /* Canvas Particle Background */
         #canvas-bg {
             position: fixed;
             top: 0;
@@ -50,27 +50,27 @@
             pointer-events: none;
         }
 
-        /* Container & Layout */
+        /* Main Container Card */
         .card-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 920px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 175, 55, 0.1);
+            border-radius: 24px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(212, 175, 55, 0.12);
             overflow: hidden;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Header / Banner */
+        /* Banner Section with IMG_7820.jpeg */
         .hero-banner {
             position: relative;
-            height: 240px;
-            background: linear-gradient(rgba(11, 15, 25, 0.4), rgba(11, 15, 25, 0.9)), 
-                        url('IMG_0682.jpeg') center/cover;
+            height: 250px;
+            background: linear-gradient(rgba(11, 15, 25, 0.45), rgba(11, 15, 25, 0.95)), 
+                        url('IMG_7820.jpeg') center/cover;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -84,25 +84,25 @@
             font-size: 2.5rem;
             color: var(--primary-gold);
             margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
         }
 
         .hero-banner h1 {
             font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             color: var(--light-gold);
             letter-spacing: 2px;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.3rem;
         }
 
         .hero-banner p {
             color: var(--text-muted);
             font-size: 0.95rem;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
-        /* Profile Quick Stats Bar */
+        /* Quick Stats Ribbon */
         .quick-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -134,7 +134,72 @@
             color: var(--text-light);
         }
 
-        /* Sections Grid */
+        /* Photo Gallery Section */
+        .photo-gallery-section {
+            padding: 2rem 2rem 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            color: var(--primary-gold);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .photo-card {
+            position: relative;
+            height: 280px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            background: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-card:hover {
+            border-color: var(--primary-gold);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(11, 15, 25, 0.95));
+            color: var(--light-gold);
+            font-size: 0.85rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Content Grid */
         .content-grid {
             padding: 2rem;
             display: grid;
@@ -145,7 +210,7 @@
         .info-block {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 1.5rem;
             transition: all 0.3s ease;
         }
@@ -160,24 +225,12 @@
             grid-column: 1 / -1;
         }
 
-        .block-title {
-            font-family: 'Cinzel', serif;
-            color: var(--primary-gold);
-            font-size: 1.1rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            padding-bottom: 0.5rem;
-        }
-
         .detail-list {
             list-style: none;
         }
 
         .detail-list li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.85rem;
             font-size: 0.95rem;
             display: flex;
             line-height: 1.5;
@@ -195,43 +248,53 @@
             flex: 1;
         }
 
-        /* Special Highlights Box */
-        .quote-box {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0, 0, 0, 0.2));
-            border-left: 3px solid var(--primary-gold);
-            padding: 1rem;
-            border-radius: 0 8px 8px 0;
-            font-style: italic;
-            color: var(--light-gold);
-            margin-top: 0.5rem;
-        }
-
-        /* Footer / Contact Section */
+        /* Footer & Actions */
         .contact-footer {
             text-align: center;
-            padding: 2rem;
-            background: rgba(11, 15, 25, 0.8);
+            padding: 2.5rem 1.5rem;
+            background: rgba(11, 15, 25, 0.85);
             border-top: 1px solid var(--border-color);
         }
 
-        .btn-contact {
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.2rem;
+        }
+
+        .btn-action {
             display: inline-flex;
             align-items: center;
             gap: 0.6rem;
             background: linear-gradient(135deg, #d4af37, #aa820a);
             color: #000;
             font-weight: 700;
-            padding: 0.8rem 2rem;
+            padding: 0.85rem 1.8rem;
             border-radius: 30px;
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
         }
 
-        .btn-contact:hover {
+        .btn-action.secondary {
+            background: transparent;
+            color: var(--primary-gold);
+            border: 1px solid var(--primary-gold);
+            box-shadow: none;
+        }
+
+        .btn-action:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-action.secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
         }
 
         /* Animations */
@@ -254,9 +317,8 @@
         }
 
         @media (max-width: 600px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-                padding: 1rem;
+            .content-grid, .photo-gallery-section {
+                padding: 1.2rem;
             }
             .detail-list li {
                 flex-direction: column;
@@ -264,18 +326,20 @@
             .detail-list li strong {
                 margin-bottom: 0.2rem;
             }
+            .action-buttons {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Particle Background -->
+    <!-- Dynamic Canvas Animation -->
     <canvas id="canvas-bg"></canvas>
 
-    <!-- Main Biodata Card -->
     <div class="card-container">
         
-        <!-- Hero Section -->
+        <!-- Hero Header -->
         <div class="hero-banner">
             <div class="symbol">🕌</div>
             <h1>UMER HANIF INAMDAR</h1>
@@ -306,75 +370,99 @@
             </div>
         </div>
 
+        <!-- Photo Gallery Section -->
+        <div class="photo-gallery-section reveal">
+            <div class="section-title">
+                <i class="fa-solid fa-camera-retro"></i> Photo Gallery
+            </div>
+            <div class="gallery-grid">
+                <!-- Photo 1: IMG_7806.jpeg -->
+                <div class="photo-card">
+                    <img src="IMG_7806.jpeg" alt="Umer Hanif Inamdar - Photo 1">
+                    <div class="photo-overlay">Portrait Photo</div>
+                </div>
+
+                <!-- Photo 2: IMG_0682.jpeg -->
+                <div class="photo-card">
+                    <img src="IMG_0682.jpeg" alt="Umer Hanif Inamdar - Photo 2">
+                    <div class="photo-overlay">Casual Profile</div>
+                </div>
+
+                <!-- Photo 3: IMG_4458.jpeg -->
+                <div class="photo-card">
+                    <img src="IMG_4458.jpeg" alt="Umer Hanif Inamdar - Photo 3">
+                    <div class="photo-overlay">Recent Photo</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Content Grid -->
         <div class="content-grid">
 
             <!-- Education & Career -->
             <div class="info-block reveal">
-                <div class="block-title">
+                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
                     <i class="fa-solid fa-graduation-cap"></i> Education & Career
                 </div>
                 <ul class="detail-list">
                     <li><strong>Education:</strong> <span>B.E. in Software Engineering (2023)</span></li>
                     <li><strong>Languages:</strong> <span>Pursuing French Language Studies</span></li>
-                    <li><strong>Experience:</strong> 
+                    <li><strong>Work Experience:</strong> 
                         <span>
                             • Software Trainee Engineer – QuEST Global, Bengaluru (2023–2024)<br>
                             • Analyst – eClerx (2024–2026)
                         </span>
                     </li>
-                    <li><strong>Future Goals:</strong> <span>Joining a job for a few years with plans to settle abroad long-term</span></li>
+                    <li><strong>Career Plans:</strong> <span>Joining a job for a few years with long-term plans to move abroad</span></li>
                 </ul>
             </div>
 
-            <!-- Religious & Community Beliefs -->
+            <!-- Religious Beliefs -->
             <div class="info-block reveal">
-                <div class="block-title">
-                    <i class="fa-solid fa-mosque"></i> Religious Beliefs & Practice
+                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
+                    <i class="fa-solid fa-mosque"></i> Religious Practice
                 </div>
                 <ul class="detail-list">
-                    <li><strong>Maslak:</strong> <span>Believes in a united community; respects all maslaks</span></li>
-                    <li><strong>Prayers:</strong> <span>Offers daily prayers regularly (3 times on time during work hours, and 2 times after Isha as Qaza)</span></li>
+                    <li><strong>Maslak:</strong> <span>Believes in a united community and respects all maslaks</span></li>
+                    <li><strong>Prayers:</strong> <span>Offers daily prayers (3 times on time during work hours, and 2 times after Isha as Qaza)</span></li>
                 </ul>
             </div>
 
-            <!-- Family & Background -->
+            <!-- Family Details -->
             <div class="info-block reveal">
-                <div class="block-title">
+                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
                     <i class="fa-solid fa-users"></i> Family Details
                 </div>
                 <ul class="detail-list">
                     <li><strong>Father's Name:</strong> <span>Hanif Inamdar</span></li>
-                    <li><strong>Father's Occupation:</strong> <span>Government Employee (Driver, MSRTC)</span></li>
+                    <li><strong>Father's Job:</strong> <span>Government Employee (Driver in MSRTC)</span></li>
                     <li><strong>Mother's Name:</strong> <span>Naziya Inamdar</span></li>
                     <li><strong>Mother's Occupation:</strong> <span>Housewife</span></li>
                     <li><strong>Brothers:</strong> <span>1 Younger Brother (Married)</span></li>
-                    <li><strong>Family Count:</strong> <span>5 Members</span></li>
+                    <li><strong>Family Members:</strong> <span>5 Members</span></li>
                 </ul>
             </div>
 
-            <!-- Residence & Home -->
+            <!-- Residence & Real Estate -->
             <div class="info-block reveal">
-                <div class="block-title">
-                    <i class="fa-solid fa-house-chimney"></i> Residence & Property
+                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
+                    <i class="fa-solid fa-house-chimney"></i> Residence & Real Estate
                 </div>
                 <ul class="detail-list">
-                    <li><strong>Current Residence:</strong> <span>Mudhale, Baramati</span></li>
+                    <li><strong>Residence:</strong> <span>Mudhale, Baramati</span></li>
                     <li><strong>Native Place:</strong> <span>Pune</span></li>
-                    <li><strong>Home Ownership:</strong> <span>Home owned by parents. (No plans to buy additional real estate as planning to move abroad)</span></li>
+                    <li><strong>Property Status:</strong> <span>Home owned by parents. (No interest in buying or settling down in one place long-term as planning to move abroad)</span></li>
                 </ul>
             </div>
 
-            <!-- Personal Preferences & Hobbies -->
+            <!-- Hobbies & Expectations -->
             <div class="info-block full-width reveal">
-                <div class="block-title">
-                    <i class="fa-solid fa-compass"></i> Hobbies & Partner Expectations
+                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
+                    <i class="fa-solid fa-compass"></i> Hobbies & Expectations
                 </div>
                 <ul class="detail-list">
                     <li><strong>Hobbies:</strong> <span>Cooking & Computers</span></li>
-                    <li><strong>Expectations:</strong> 
-                        <span>No specific expectations. Strongly believes that everyone is unique and beautiful in their own way, and values acceptance as they are.</span>
-                    </li>
+                    <li><strong>Expectations:</strong> <span>No expectations. Believes everyone is beautiful in their own unique way and wants them as they are.</span></li>
                 </ul>
             </div>
 
@@ -382,23 +470,27 @@
 
         <!-- Footer Call to Action -->
         <div class="contact-footer">
-            <p style="color: var(--text-muted); font-size: 0.9rem;">For further communication, please connect at:</p>
-            <a href="tel:8530139154" class="btn-contact">
-                <i class="fa-solid fa-phone"></i> +91 8530139154
-            </a>
-            <p style="margin-top: 1.5rem; color: var(--primary-gold); font-family: 'Cinzel', serif; letter-spacing: 2px;">
+            <p style="color: var(--text-muted); font-size: 0.9rem;">To get in touch or discuss further:</p>
+            <div class="action-buttons">
+                <a href="tel:8530139154" class="btn-action">
+                    <i class="fa-solid fa-phone"></i> Call: +91 8530139154
+                </a>
+                <a href="https://wa.me/918530139154" target="_blank" class="btn-action secondary">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
+            <p style="margin-top: 1.8rem; color: var(--primary-gold); font-family: 'Cinzel', serif; letter-spacing: 2px;">
                 Alhamdulillah
             </p>
         </div>
 
     </div>
 
-    <!-- Interactive Canvas & Animation Scripts -->
+    <!-- Scripts -->
     <script>
-        // Particle Background Generator
+        // Floating Particle Background Effect
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
-
         let particlesArray = [];
         const numberOfParticles = 45;
 
@@ -451,7 +543,7 @@
         }
         animateParticles();
 
-        // Reveal Elements on Scroll / Load
+        // Reveal-on-Scroll/Load Animation
         function revealOnScroll() {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach((el, index) => {
