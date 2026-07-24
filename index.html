@@ -12,12 +12,13 @@
     <style>
         :root {
             --bg-color: #0b0f19;
-            --card-bg: rgba(22, 31, 49, 0.75);
+            --card-bg: rgba(22, 31, 49, 0.85);
             --border-color: rgba(212, 175, 55, 0.35);
             --primary-gold: #d4af37;
             --light-gold: #f3e5ab;
             --text-light: #e2e8f0;
             --text-muted: #94a3b8;
+            --nav-bg: rgba(11, 15, 25, 0.95);
         }
 
         * {
@@ -26,15 +27,17 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-light);
             font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 1rem;
+            padding-top: 70px; /* Space for sticky navbar */
+            padding-bottom: 2rem;
             overflow-x: hidden;
             position: relative;
         }
@@ -50,10 +53,69 @@
             pointer-events: none;
         }
 
+        /* Sticky Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background: var(--nav-bg);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5rem;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel', serif;
+            color: var(--light-gold);
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-gold);
+        }
+
+        /* Mobile Hamburger Icon */
+        .menu-toggle {
+            display: none;
+            color: var(--primary-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
         /* Main Container Card */
         .card-container {
-            width: 100%;
+            width: 92%;
             max-width: 920px;
+            margin: 0 auto;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 24px;
@@ -65,10 +127,10 @@
             animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        /* Banner Section with IMG_7820.jpeg */
+        /* Banner Section */
         .hero-banner {
             position: relative;
-            height: 250px;
+            height: 260px;
             background: linear-gradient(rgba(11, 15, 25, 0.45), rgba(11, 15, 25, 0.95)), 
                         url('IMG_7820.jpeg') center/cover;
             display: flex;
@@ -89,7 +151,7 @@
 
         .hero-banner h1 {
             font-family: 'Cinzel', serif;
-            font-size: 2.3rem;
+            font-size: 2.1rem;
             color: var(--light-gold);
             letter-spacing: 2px;
             margin-bottom: 0.3rem;
@@ -97,7 +159,7 @@
 
         .hero-banner p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             letter-spacing: 1.5px;
             text-transform: uppercase;
         }
@@ -105,7 +167,7 @@
         /* Quick Stats Ribbon */
         .quick-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 1rem;
             padding: 1.5rem;
             background: rgba(11, 15, 25, 0.5);
@@ -130,14 +192,15 @@
         }
 
         .stat-item strong {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-light);
         }
 
-        /* Photo Gallery Section */
-        .photo-gallery-section {
-            padding: 2rem 2rem 1rem 2rem;
+        /* Section Layout Adjustment for Better Mobile Spacing */
+        .section-block {
+            padding: 2rem 1.8rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            scroll-margin-top: 65px; /* Offset for sticky menu */
         }
 
         .section-title {
@@ -152,6 +215,7 @@
             padding-bottom: 0.5rem;
         }
 
+        /* Photo Gallery */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -160,7 +224,7 @@
 
         .photo-card {
             position: relative;
-            height: 280px;
+            height: 320px; /* Taller on mobile for better visibility */
             border-radius: 14px;
             overflow: hidden;
             border: 1px solid rgba(212, 175, 55, 0.25);
@@ -174,12 +238,6 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
-        }
-
-        .photo-card:hover {
-            border-color: var(--primary-gold);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.2);
         }
 
         .photo-card:hover img {
@@ -203,7 +261,32 @@
             gap: 0.5rem;
         }
 
-        /* Full Screen Image Modal Lightbox */
+        /* Details List */
+        .detail-list {
+            list-style: none;
+        }
+
+        .detail-list li {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: row;
+            line-height: 1.6;
+        }
+
+        .detail-list li strong {
+            color: var(--light-gold);
+            min-width: 140px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .detail-list li span {
+            color: var(--text-light);
+            flex: 1;
+        }
+
+        /* Lightbox Modal */
         .modal-lightbox {
             position: fixed;
             top: 0;
@@ -233,12 +316,6 @@
             border: 2px solid var(--primary-gold);
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
             object-fit: contain;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-lightbox.active img {
-            transform: scale(1);
         }
 
         .modal-close-btn {
@@ -248,68 +325,15 @@
             color: var(--light-gold);
             font-size: 2rem;
             cursor: pointer;
-            transition: color 0.2s ease;
         }
 
-        .modal-close-btn:hover {
-            color: var(--primary-gold);
-        }
-
-        /* Content Grid */
-        .content-grid {
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .info-block {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .info-block:hover {
-            border-color: var(--border-color);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .info-block.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .detail-list {
-            list-style: none;
-        }
-
-        .detail-list li {
-            margin-bottom: 0.85rem;
-            font-size: 0.95rem;
-            display: flex;
-            line-height: 1.5;
-        }
-
-        .detail-list li strong {
-            color: var(--light-gold);
-            min-width: 140px;
-            display: inline-block;
-            font-weight: 600;
-        }
-
-        .detail-list li span {
-            color: var(--text-light);
-            flex: 1;
-        }
-
-        /* Footer & Actions */
+        /* Contact Section */
         .contact-footer {
             text-align: center;
             padding: 2.5rem 1.5rem;
             background: rgba(11, 15, 25, 0.85);
             border-top: 1px solid var(--border-color);
+            scroll-margin-top: 65px;
         }
 
         .action-buttons {
@@ -333,7 +357,6 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
             border: none;
-            cursor: pointer;
             font-size: 0.95rem;
         }
 
@@ -344,16 +367,63 @@
             box-shadow: none;
         }
 
-        .btn-action:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        /* Mobile Specific Styles */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 65px;
+            }
+
+            .card-container {
+                width: 100%;
+                border-radius: 0; /* Full edge-to-edge feel on phones */
+                border: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 65px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 65px);
+                background: var(--nav-bg);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: left 0.3s ease;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.2rem;
+            }
+
+            .quick-stats {
+                grid-template-columns: repeat(2, 1fr); /* 2x2 grid on mobile */
+            }
+
+            .detail-list li {
+                flex-direction: column;
+                margin-bottom: 1.2rem;
+            }
+
+            .detail-list li strong {
+                margin-bottom: 0.2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
         }
 
-        .btn-action.secondary:hover {
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        /* Animations */
         @keyframes fadeIn {
             to {
                 opacity: 1;
@@ -371,38 +441,40 @@
             opacity: 1;
             transform: translateY(0);
         }
-
-        @media (max-width: 600px) {
-            .content-grid, .photo-gallery-section {
-                padding: 1.2rem;
-            }
-            .detail-list li {
-                flex-direction: column;
-            }
-            .detail-list li strong {
-                margin-bottom: 0.2rem;
-            }
-            .action-buttons {
-                flex-direction: column;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Canvas Animation -->
+    <!-- Canvas Animation -->
     <canvas id="canvas-bg"></canvas>
 
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#about" class="nav-logo">🕌 UMER INAMDAR</a>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars" id="menuIcon"></i>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#about" onclick="toggleMenu()"><i class="fa-solid fa-user"></i> About</a></li>
+            <li><a href="#photos" onclick="toggleMenu()"><i class="fa-solid fa-camera"></i> Photos</a></li>
+            <li><a href="#career" onclick="toggleMenu()"><i class="fa-solid fa-briefcase"></i> Career</a></li>
+            <li><a href="#family" onclick="toggleMenu()"><i class="fa-solid fa-users"></i> Family</a></li>
+            <li><a href="#lifestyle" onclick="toggleMenu()"><i class="fa-solid fa-compass"></i> Lifestyle</a></li>
+            <li><a href="#contact" onclick="toggleMenu()"><i class="fa-solid fa-phone"></i> Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container Card -->
     <div class="card-container">
         
-        <!-- Hero Header -->
-        <div class="hero-banner">
+        <!-- Hero Section -->
+        <div class="hero-banner" id="about">
             <div class="symbol">🕌</div>
             <h1>UMER HANIF INAMDAR</h1>
             <p>Software Engineer</p>
         </div>
 
-        <!-- Quick Info Ribbon -->
+        <!-- Quick Stats Ribbon -->
         <div class="quick-stats">
             <div class="stat-item">
                 <i class="fa-solid fa-cake-candles"></i>
@@ -416,7 +488,7 @@
             </div>
             <div class="stat-item">
                 <i class="fa-solid fa-heart"></i>
-                <span>Marital Status</span>
+                <span>Status</span>
                 <strong>Single</strong>
             </div>
             <div class="stat-item">
@@ -427,24 +499,19 @@
         </div>
 
         <!-- Photo Gallery Section -->
-        <div class="photo-gallery-section reveal">
+        <div class="section-block reveal" id="photos">
             <div class="section-title">
                 <i class="fa-solid fa-camera-retro"></i> Photo Gallery
             </div>
             <div class="gallery-grid">
-                <!-- Photo 1: IMG_7806.jpeg -->
                 <div class="photo-card" onclick="openPhotoModal('IMG_7806.jpeg')">
                     <img src="IMG_7806.jpeg" alt="Umer Hanif Inamdar - Photo 1">
                     <div class="photo-overlay"><i class="fa-solid fa-expand"></i> Tap to View Full Photo</div>
                 </div>
-
-                <!-- Photo 2: IMG_0682.jpeg -->
                 <div class="photo-card" onclick="openPhotoModal('IMG_0682.jpeg')">
                     <img src="IMG_0682.jpeg" alt="Umer Hanif Inamdar - Photo 2">
                     <div class="photo-overlay"><i class="fa-solid fa-expand"></i> Tap to View Full Photo</div>
                 </div>
-
-                <!-- Photo 3: IMG_4458.jpeg -->
                 <div class="photo-card" onclick="openPhotoModal('IMG_4458.jpeg')">
                     <img src="IMG_4458.jpeg" alt="Umer Hanif Inamdar - Photo 3">
                     <div class="photo-overlay"><i class="fa-solid fa-expand"></i> Tap to View Full Photo</div>
@@ -452,80 +519,75 @@
             </div>
         </div>
 
-        <!-- Content Grid -->
-        <div class="content-grid">
-
-            <!-- Education & Career -->
-            <div class="info-block reveal">
-                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
-                    <i class="fa-solid fa-graduation-cap"></i> Education & Career
-                </div>
-                <ul class="detail-list">
-                    <li><strong>Education:</strong> <span>B.E. in Software Engineering (2023)</span></li>
-                    <li><strong>Languages:</strong> <span>Pursuing French Language Studies</span></li>
-                    <li><strong>Work Experience:</strong> 
-                        <span>
-                            • Software Trainee Engineer – QuEST Global, Bengaluru (2023–2024)<br>
-                            • Analyst – eClerx (2024–2026)
-                        </span>
-                    </li>
-                    <li><strong>Career Plans:</strong> <span>Joining a job for a few years with long-term plans to move abroad</span></li>
-                </ul>
+        <!-- Education & Career Section -->
+        <div class="section-block reveal" id="career">
+            <div class="section-title">
+                <i class="fa-solid fa-graduation-cap"></i> Education & Career
             </div>
-
-            <!-- Religious Beliefs -->
-            <div class="info-block reveal">
-                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
-                    <i class="fa-solid fa-mosque"></i> Religious Practice
-                </div>
-                <ul class="detail-list">
-                    <li><strong>Maslak:</strong> <span>Believes in a united community and respects all maslaks</span></li>
-                    <li><strong>Prayers:</strong> <span>Offers daily prayers (3 times on time during work hours, and 2 times after Isha as Qaza)</span></li>
-                </ul>
-            </div>
-
-            <!-- Family Details -->
-            <div class="info-block reveal">
-                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
-                    <i class="fa-solid fa-users"></i> Family Details
-                </div>
-                <ul class="detail-list">
-                    <li><strong>Father's Name:</strong> <span>Hanif Inamdar</span></li>
-                    <li><strong>Father's Job:</strong> <span>Government Employee (Driver in MSRTC)</span></li>
-                    <li><strong>Mother's Name:</strong> <span>Naziya Inamdar</span></li>
-                    <li><strong>Mother's Occupation:</strong> <span>Housewife</span></li>
-                    <li><strong>Brothers:</strong> <span>1 Younger Brother (Married)</span></li>
-                    <li><strong>Family Members:</strong> <span>5 Members</span></li>
-                </ul>
-            </div>
-
-            <!-- Residence & Real Estate -->
-            <div class="info-block reveal">
-                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
-                    <i class="fa-solid fa-house-chimney"></i> Residence & Real Estate
-                </div>
-                <ul class="detail-list">
-                    <li><strong>Residence:</strong> <span>Mudhale, Baramati</span></li>
-                    <li><strong>Native Place:</strong> <span>Pune</span></li>
-                    <li><strong>Property Status:</strong> <span>Home owned by parents. (No interest in buying or settling down in one place long-term as planning to move abroad)</span></li>
-                </ul>
-            </div>
-
-            <!-- Hobbies & Expectations -->
-            <div class="info-block full-width reveal">
-                <div class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">
-                    <i class="fa-solid fa-compass"></i> Hobbies & Expectations
-                </div>
-                <ul class="detail-list">
-                    <li><strong>Hobbies:</strong> <span>Cooking & Computers</span></li>
-                    <li><strong>Expectations:</strong> <span>No expectations. Believes everyone is beautiful in their own unique way and wants them as they are.</span></li>
-                </ul>
-            </div>
-
+            <ul class="detail-list">
+                <li><strong>Education:</strong> <span>B.E. in Software Engineering (Graduated: 2023)</span></li>
+                <li><strong>Language Studies:</strong> <span>Currently Pursuing French Language Studies</span></li>
+                <li><strong>Work Experience:</strong> 
+                    <span>
+                        • Software Trainee Engineer – QuEST Global, Bengaluru (2023–2024)<br>
+                        • Analyst – eClerx (2024–2026)
+                    </span>
+                </li>
+                <li><strong>Future Plans:</strong> <span>Joining a job for a few years with long-term plans to move abroad</span></li>
+            </ul>
         </div>
 
-        <!-- Footer Call to Action -->
-        <div class="contact-footer">
+        <!-- Religious Beliefs Section -->
+        <div class="section-block reveal">
+            <div class="section-title">
+                <i class="fa-solid fa-mosque"></i> Religious Practice
+            </div>
+            <ul class="detail-list">
+                <li><strong>Maslak:</strong> <span>Believes in a united community and respects all maslaks</span></li>
+                <li><strong>Prayers:</strong> <span>Offers daily prayers (3 times on time during work hours, and 2 times after Isha as Qaza)</span></li>
+            </ul>
+        </div>
+
+        <!-- Family Details Section -->
+        <div class="section-block reveal" id="family">
+            <div class="section-title">
+                <i class="fa-solid fa-users"></i> Family Details
+            </div>
+            <ul class="detail-list">
+                <li><strong>Father's Name:</strong> <span>Hanif Inamdar</span></li>
+                <li><strong>Father's Job:</strong> <span>Government Employee (Driver in MSRTC)</span></li>
+                <li><strong>Mother's Name:</strong> <span>Naziya Inamdar</span></li>
+                <li><strong>Mother's Occupation:</strong> <span>Housewife</span></li>
+                <li><strong>Brothers:</strong> <span>1 Younger Brother (Married)</span></li>
+                <li><strong>Family Members:</strong> <span>5 Members</span></li>
+            </ul>
+        </div>
+
+        <!-- Residence & Real Estate Section -->
+        <div class="section-block reveal">
+            <div class="section-title">
+                <i class="fa-solid fa-house-chimney"></i> Residence & Real Estate
+            </div>
+            <ul class="detail-list">
+                <li><strong>Current Residence:</strong> <span>Mudhale, Baramati</span></li>
+                <li><strong>Native Place:</strong> <span>Pune</span></li>
+                <li><strong>Home Property:</strong> <span>Home owned by parents. (No interest in buying or settling down in one place long-term as planning to move abroad)</span></li>
+            </ul>
+        </div>
+
+        <!-- Hobbies & Expectations Section -->
+        <div class="section-block reveal" id="lifestyle">
+            <div class="section-title">
+                <i class="fa-solid fa-compass"></i> Hobbies & Expectations
+            </div>
+            <ul class="detail-list">
+                <li><strong>Hobbies:</strong> <span>Cooking & Computers</span></li>
+                <li><strong>Expectations:</strong> <span>No expectations. Believes everyone is beautiful in their own unique way and wants them as they are.</span></li>
+            </ul>
+        </div>
+
+        <!-- Footer Call to Action Section -->
+        <div class="contact-footer" id="contact">
             <p style="color: var(--text-muted); font-size: 0.9rem;">To get in touch or discuss further:</p>
             <div class="action-buttons">
                 <a href="tel:8530139154" class="btn-action">
@@ -542,7 +604,7 @@
 
     </div>
 
-    <!-- Fullscreen Image Modal Overlay -->
+    <!-- Fullscreen Image Modal -->
     <div class="modal-lightbox" id="modalLightbox" onclick="closePhotoModal()">
         <span class="modal-close-btn">&times;</span>
         <img id="modalImg" src="" alt="Full Screen View">
@@ -550,7 +612,22 @@
 
     <!-- Scripts -->
     <script>
-        // Full Screen Lightbox Modal Logic
+        // Mobile Navigation Toggle Logic
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const menuIcon = document.getElementById('menuIcon');
+            navLinks.classList.toggle('active');
+
+            if (navLinks.classList.contains('active')) {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            } else {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
+
+        // Fullscreen Lightbox Logic
         function openPhotoModal(imgSrc) {
             const modal = document.getElementById('modalLightbox');
             const modalImg = document.getElementById('modalImg');
@@ -563,11 +640,11 @@
             modal.classList.remove('active');
         }
 
-        // Floating Particle Background Effect
+        // Canvas Particle Effect
         const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
-        const numberOfParticles = 45;
+        const numberOfParticles = 40;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -618,13 +695,13 @@
         }
         animateParticles();
 
-        // Reveal-on-Scroll/Load Animation
+        // Reveal-on-Scroll Logic
         function revealOnScroll() {
             const reveals = document.querySelectorAll('.reveal');
             reveals.forEach((el, index) => {
                 setTimeout(() => {
                     el.classList.add('active');
-                }, index * 120);
+                }, index * 100);
             });
         }
         window.addEventListener('load', revealOnScroll);
