@@ -1,188 +1,466 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multi-Frame Loader – Custom Reload Time</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 20px;
-      background: #0a0a0a;
-      color: #e0e0e0;
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .input-area {
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    .row {
-      margin: 12px 0;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-      align-items: center;
-    }
-    input[type="text"], input[type="number"] {
-      padding: 12px 16px;
-      font-size: 16px;
-      border: 2px solid #444;
-      border-radius: 8px;
-      background: #111;
-      color: white;
-      min-width: 320px;
-      max-width: 600px;
-    }
-    input[type="number"] {
-      width: 140px;
-    }
-    input:focus {
-      border-color: #0f8;
-      box-shadow: 0 0 10px #0f84;
-      outline: none;
-    }
-    button {
-      padding: 14px 40px;
-      font-size: 18px;
-      background: linear-gradient(90deg, #0f8, #0f84);
-      color: black;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover {
-      opacity: 0.92;
-      transform: scale(1.04);
-    }
-    #status {
-      margin: 20px 0;
-      font-size: 15px;
-      color: #0f8;
-      text-align: center;
-      min-height: 24px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 10px;
-    }
-    iframe {
-      width: 128px;
-      height: 120px;
-      border: 1px solid #333;
-      border-radius: 6px;
-      background: #111;
-    }
-    .warning {
-      background: #300;
-      padding: 12px;
-      border-radius: 6px;
-      margin: 20px 0;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umer Hanif Inamdar | Matrimonial Biodata</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(22, 31, 49, 0.7);
+            --border-color: rgba(212, 175, 55, 0.3);
+            --primary-gold: #d4af37;
+            --light-gold: #f3e5ab;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Particles */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Container & Layout */
+        .card-container {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 175, 55, 0.1);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Header / Banner */
+        .hero-banner {
+            position: relative;
+            height: 240px;
+            background: linear-gradient(rgba(11, 15, 25, 0.4), rgba(11, 15, 25, 0.9)), 
+                        url('https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1200&q=80') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .symbol {
+            font-size: 2.5rem;
+            color: var(--primary-gold);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .hero-banner h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            color: var(--light-gold);
+            letter-spacing: 2px;
+            margin-bottom: 0.2rem;
+        }
+
+        .hero-banner p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Profile Quick Stats Bar */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(11, 15, 25, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item i {
+            color: var(--primary-gold);
+            margin-bottom: 0.4rem;
+            font-size: 1.1rem;
+        }
+
+        .stat-item span {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .stat-item strong {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* Sections Grid */
+        .content-grid {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-block {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .info-block:hover {
+            border-color: var(--border-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-block.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .block-title {
+            font-family: 'Cinzel', serif;
+            color: var(--primary-gold);
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .detail-list {
+            list-style: none;
+        }
+
+        .detail-list li {
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            display: flex;
+            line-height: 1.5;
+        }
+
+        .detail-list li strong {
+            color: var(--light-gold);
+            min-width: 140px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .detail-list li span {
+            color: var(--text-light);
+            flex: 1;
+        }
+
+        /* Special Highlights Box */
+        .quote-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0, 0, 0, 0.2));
+            border-left: 3px solid var(--primary-gold);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--light-gold);
+            margin-top: 0.5rem;
+        }
+
+        /* Footer / Contact Section */
+        .contact-footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(11, 15, 25, 0.8);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-contact {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(135deg, #d4af37, #aa820a);
+            color: #000;
+            font-weight: 700;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            margin-top: 1rem;
+        }
+
+        .btn-contact:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            .detail-list li {
+                flex-direction: column;
+            }
+            .detail-list li strong {
+                margin-bottom: 0.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-  <h2 style="text-align:center; color:#0f8; margin-bottom: 24px;">
-    Load any page in 50 frames – custom reload interval
-  </h2>
+    <!-- Particle Background -->
+    <canvas id="canvas-bg"></canvas>
 
-  <div class="input-area">
-    <div class="row">
-      <input type="text" id="urlInput" placeholder="https://example.com" value="https://trimz.ai/black-clover-devils-reckoning">
+    <!-- Main Biodata Card -->
+    <div class="card-container">
+        
+        <!-- Hero Section -->
+        <div class="hero-banner">
+            <div class="symbol">🕌</div>
+            <h1>UMER HANIF INAMDAR</h1>
+            <p>Software Engineer</p>
+        </div>
+
+        <!-- Quick Info Ribbon -->
+        <div class="quick-stats">
+            <div class="stat-item">
+                <i class="fa-solid fa-cake-candles"></i>
+                <span>Date of Birth</span>
+                <strong>26 / 10 / 1999</strong>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-ruler-vertical"></i>
+                <span>Height</span>
+                <strong>6'0" (6 Feet)</strong>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-heart"></i>
+                <span>Marital Status</span>
+                <strong>Single</strong>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Native</span>
+                <strong>Pune</strong>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+
+            <!-- Education & Career -->
+            <div class="info-block reveal">
+                <div class="block-title">
+                    <i class="fa-solid fa-graduation-cap"></i> Education & Career
+                </div>
+                <ul class="detail-list">
+                    <li><strong>Education:</strong> <span>B.E. in Software Engineering (2023)</span></li>
+                    <li><strong>Languages:</strong> <span>Pursuing French Language Studies</span></li>
+                    <li><strong>Experience:</strong> 
+                        <span>
+                            • Software Trainee Engineer – QuEST Global, Bengaluru (2023–2024)<br>
+                            • Analyst – eClerx (2024–2026)
+                        </span>
+                    </li>
+                    <li><strong>Future Goals:</strong> <span>Joining a job for a few years with plans to settle abroad long-term</span></li>
+                </ul>
+            </div>
+
+            <!-- Religious & Community Beliefs -->
+            <div class="info-block reveal">
+                <div class="block-title">
+                    <i class="fa-solid fa-mosque"></i> Religious Beliefs & Practice
+                </div>
+                <ul class="detail-list">
+                    <li><strong>Maslak:</strong> <span>Believes in a united community; respects all maslaks</span></li>
+                    <li><strong>Prayers:</strong> <span>Offers daily prayers regularly (3 times on time during work hours, and 2 times after Isha as Qaza)</span></li>
+                </ul>
+            </div>
+
+            <!-- Family & Background -->
+            <div class="info-block reveal">
+                <div class="block-title">
+                    <i class="fa-solid fa-users"></i> Family Details
+                </div>
+                <ul class="detail-list">
+                    <li><strong>Father's Name:</strong> <span>Hanif Inamdar</span></li>
+                    <li><strong>Father's Occupation:</strong> <span>Government Employee (Driver, MSRTC)</span></li>
+                    <li><strong>Mother's Name:</strong> <span>Naziya Inamdar</span></li>
+                    <li><strong>Mother's Occupation:</strong> <span>Housewife</span></li>
+                    <li><strong>Brothers:</strong> <span>1 Younger Brother (Married)</span></li>
+                    <li><strong>Family Count:</strong> <span>5 Members</span></li>
+                </ul>
+            </div>
+
+            <!-- Residence & Home -->
+            <div class="info-block reveal">
+                <div class="block-title">
+                    <i class="fa-solid fa-house-chimney"></i> Residence & Property
+                </div>
+                <ul class="detail-list">
+                    <li><strong>Current Residence:</strong> <span>Mudhale, Baramati</span></li>
+                    <li><strong>Native Place:</strong> <span>Pune</span></li>
+                    <li><strong>Home Ownership:</strong> <span>Home owned by parents. (No plans to buy additional real estate as planning to move abroad)</span></li>
+                </ul>
+            </div>
+
+            <!-- Personal Preferences & Hobbies -->
+            <div class="info-block full-width reveal">
+                <div class="block-title">
+                    <i class="fa-solid fa-compass"></i> Hobbies & Partner Expectations
+                </div>
+                <ul class="detail-list">
+                    <li><strong>Hobbies:</strong> <span>Cooking & Computers</span></li>
+                    <li><strong>Expectations:</strong> 
+                        <span>No specific expectations. Strongly believes that everyone is unique and beautiful in their own way, and values acceptance as they are.</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Footer Call to Action -->
+        <div class="contact-footer">
+            <p style="color: var(--text-muted); font-size: 0.9rem;">For further communication, please connect at:</p>
+            <a href="tel:8530139154" class="btn-contact">
+                <i class="fa-solid fa-phone"></i> +91 8530139154
+            </a>
+            <p style="margin-top: 1.5rem; color: var(--primary-gold); font-family: 'Cinzel', serif; letter-spacing: 2px;">
+                Alhamdulillah
+            </p>
+        </div>
+
     </div>
 
-    <div class="row">
-      <label for="intervalInput">Reload every:</label>
-      <input type="number" id="intervalInput" min="10" value="60"> seconds
-    </div>
+    <!-- Interactive Canvas & Animation Scripts -->
+    <script>
+        // Particle Background Generator
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
 
-    <button onclick="loadFrames()">Load / Run in 50 Frames</button>
-  </div>
+        let particlesArray = [];
+        const numberOfParticles = 45;
 
-  <div id="status">Ready – enter URL + interval and click Load</div>
-
-  <div class="warning">
-    • Many websites block iframes (X-Frame-Options: DENY / SAMEORIGIN or CSP frame-ancestors).<br>
-    • If the page contains no video or media, reloading won't show any playback.<br>
-    • Very short intervals (<15 s) may cause high CPU usage or browser throttling.
-  </div>
-
-  <div class="grid" id="grid"></div>
-</div>
-
-<script>
-let reloadTimer = null;
-
-function loadFrames() {
-  const url = document.getElementById("urlInput").value.trim();
-  let intervalSec = parseInt(document.getElementById("intervalInput").value, 10);
-
-  if (!url || !url.startsWith("http")) {
-    alert("Please enter a valid URL (http/https)");
-    return;
-  }
-
-  if (isNaN(intervalSec) || intervalSec < 10) {
-    intervalSec = 10;
-    document.getElementById("intervalInput").value = 10;
-    alert("Minimum reload interval is 10 seconds. Adjusted to 10 s.");
-  }
-
-  const status = document.getElementById("status");
-  status.textContent = `Loading 50 frames – reload every ${intervalSec} seconds...`;
-
-  const grid = document.getElementById("grid");
-  grid.innerHTML = "";
-
-  for (let i = 0; i < 50; i++) {
-    const iframe = document.createElement("iframe");
-    iframe.src = url;
-    iframe.title = `Frame ${i+1}`;
-    iframe.allow = "autoplay; fullscreen";
-    grid.appendChild(iframe);
-  }
-
-  // Clear previous timer if exists
-  if (reloadTimer) {
-    clearInterval(reloadTimer);
-    reloadTimer = null;
-  }
-
-  const RELOAD_MS = intervalSec * 1000;
-
-  reloadTimer = setInterval(() => {
-    const iframes = document.querySelectorAll("iframe");
-    iframes.forEach(iframe => {
-      try {
-        if (iframe.contentWindow?.location) {
-          iframe.contentWindow.location.reload(true);
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
-      } catch {}
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
 
-      // Fallback reload method (works even when cross-origin blocked)
-      const oldSrc = iframe.src;
-      iframe.src = "about:blank";
-      setTimeout(() => {
-        iframe.src = oldSrc;
-      }, 200);
-    });
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
 
-    status.textContent = `Reloaded all frames – next in ${intervalSec} s (${new Date().toLocaleTimeString()})`;
-  }, RELOAD_MS);
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
 
-  status.textContent = `50 frames loaded – auto-reload every ${intervalSec} seconds`;
-}
-</script>
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        initParticles();
 
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particlesArray.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Reveal Elements on Scroll / Load
+        function revealOnScroll() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('active');
+                }, index * 120);
+            });
+        }
+        window.addEventListener('load', revealOnScroll);
+    </script>
 </body>
 </html>
