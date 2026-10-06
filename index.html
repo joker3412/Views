@@ -1,771 +1,688 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Umer Hanif Inamdar | Portfolio & Biodata</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: rgba(22, 31, 49, 0.85);
-            --border-color: rgba(212, 175, 55, 0.35);
-            --primary-gold: #d4af37;
-            --light-gold: #f3e5ab;
-            --text-light: #e2e8f0;
-            --text-muted: #94a3b8;
-            --nav-bg: rgba(11, 15, 25, 0.95);
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agentic AI — Build-to-Job Program</title>
+<style>
+  :root {
+    --bg: #0d1117; --bg2: #161b22; --bg3: #21262d;
+    --border: #30363d; --text: #e6edf3; --muted: #8b949e;
+    --accent: #58a6ff; --green: #3fb950; --yellow: #d29922;
+    --purple: #bc8cff; --red: #f85149; --orange: #f0883e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6; font-size: 15px;
+  }
+  .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  header {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; margin-bottom: 20px;
+  }
+  header h1 {
+    font-size: 26px; font-weight: 700; margin-bottom: 8px;
+    background: linear-gradient(90deg, #58a6ff, #bc8cff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; font-size: 12px; color: var(--muted); }
+  .meta span { background: var(--bg3); padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); }
 
-        html {
-            scroll-behavior: smooth;
-        }
+  .progress-wrap {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; margin-bottom: 20px; position: sticky; top: 10px; z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+  .progress-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; color: var(--muted); }
+  .progress-info strong { color: var(--green); }
+  .progress-bar { height: 10px; background: var(--bg3); border-radius: 5px; overflow: hidden; }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--green), #56d364);
+    width: 0%; transition: width 0.4s ease; border-radius: 5px;
+  }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-light);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            min-height: 100vh;
-            padding-top: 70px; /* Space for sticky navbar */
-            padding-bottom: 80px; /* Space for fixed bottom footer */
-            overflow-x: hidden;
-            position: relative;
-        }
+  .controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .controls input, .controls button {
+    padding: 10px 14px; background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); font-size: 14px; font-family: inherit; transition: all 0.2s;
+  }
+  .controls input { flex: 1; min-width: 200px; }
+  .controls input:focus { outline: none; border-color: var(--accent); }
+  .controls button { cursor: pointer; }
+  .controls button:hover { background: var(--bg3); border-color: var(--accent); }
+  .controls button.danger:hover { border-color: var(--red); color: var(--red); }
 
-        /* Canvas Particle Background */
-        #canvas-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
+  .module { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; overflow: hidden; }
+  .module-header {
+    padding: 16px 20px; background: var(--bg3); cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center; user-select: none;
+  }
+  .module-header h2 { font-size: 16px; font-weight: 600; color: var(--accent); }
+  .module-header .count { font-size: 12px; color: var(--muted); background: var(--bg); padding: 3px 10px; border-radius: 20px; }
+  .module-header .arrow { color: var(--muted); transition: transform 0.2s; font-size: 12px; }
+  .module.collapsed .arrow { transform: rotate(-90deg); }
+  .module.collapsed .module-body { display: none; }
+  .module-body { padding: 12px; }
 
-        /* Sticky Navigation Bar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 65px;
-            background: var(--nav-bg);
-            border-bottom: 1px solid var(--border-color);
-            backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 1.5rem;
-            z-index: 1000;
-        }
+  .session { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; }
+  .session-header { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; cursor: pointer; user-select: none; }
+  .session-header:hover { background: var(--bg3); }
+  .session-check { width: 20px; height: 20px; min-width: 20px; margin-top: 2px; cursor: pointer; accent-color: var(--green); }
+  .session-title { flex: 1; font-size: 14px; font-weight: 500; }
+  .session-num {
+    display: inline-block; background: var(--bg3); color: var(--purple);
+    font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+    margin-right: 8px; font-family: monospace;
+  }
+  .session.done .session-title { color: var(--muted); text-decoration: line-through; }
+  .session.done .session-num { background: rgba(63, 185, 80, 0.15); color: var(--green); }
+  .session.jobprep .session-num { background: rgba(210, 153, 34, 0.15); color: var(--yellow); }
+  .session-body { padding: 0 16px 16px 48px; font-size: 13px; color: var(--muted); }
+  .session.collapsed .session-body { display: none; }
+  .session-body h4 {
+    font-size: 12px; color: var(--accent); text-transform: uppercase;
+    letter-spacing: 0.5px; margin: 12px 0 4px; display: flex; align-items: center; gap: 6px;
+  }
+  .session-body ul { padding-left: 18px; }
+  .session-body li { margin-bottom: 2px; }
+  .interview-q {
+    background: rgba(188, 140, 255, 0.08); border-left: 3px solid var(--purple);
+    padding: 8px 12px; border-radius: 6px; margin-top: 8px; font-style: italic;
+  }
 
-        .nav-logo {
-            font-family: 'Cinzel', serif;
-            color: var(--light-gold);
-            font-weight: 700;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+  /* 🆕 YOUR JOB section */
+  .job-section {
+    background: rgba(63, 185, 80, 0.08);
+    border-left: 3px solid var(--green);
+    padding: 10px 14px; border-radius: 6px; margin-top: 10px;
+    font-size: 13px; color: #b7e4c7; font-style: normal;
+  }
+  .job-section strong { color: var(--green); }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 1.2rem;
-        }
+  /* 🆕 LINKEDIN section */
+  .linkedin-section {
+    background: rgba(240, 136, 62, 0.08);
+    border-left: 3px solid var(--orange);
+    padding: 10px 14px; border-radius: 6px; margin-top: 10px;
+  }
+  .linkedin-section .li-title {
+    font-size: 12px; color: var(--orange); text-transform: uppercase;
+    letter-spacing: 0.5px; font-weight: 600; margin-bottom: 6px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .linkedin-section pre {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px; font-size: 11px; color: var(--muted); white-space: pre-wrap;
+    word-wrap: break-word; font-family: ui-monospace, monospace; line-height: 1.5;
+    max-height: 220px; overflow-y: auto;
+  }
+  .copy-li-btn {
+    background: var(--orange); color: var(--bg); border: none;
+    padding: 4px 10px; border-radius: 4px; cursor: pointer;
+    font-size: 11px; font-weight: 600; font-family: inherit;
+  }
+  .copy-li-btn:hover { opacity: 0.9; }
 
-        .nav-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
+  .master-prompt {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px; margin-bottom: 20px;
+  }
+  .master-prompt h3 { font-size: 14px; margin-bottom: 10px; color: var(--yellow); }
+  .master-prompt pre {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px; font-size: 11px; overflow-x: auto; white-space: pre-wrap;
+    word-wrap: break-word; max-height: 220px; overflow-y: auto;
+  }
+  .master-prompt button {
+    margin-top: 10px; padding: 8px 14px; background: var(--accent);
+    color: var(--bg); border: none; border-radius: 6px; font-weight: 600;
+    cursor: pointer; font-size: 13px;
+  }
+  .master-prompt button:hover { opacity: 0.9; }
 
-        .nav-links a:hover {
-            color: var(--primary-gold);
-        }
+  footer {
+    text-align: center; color: var(--muted); font-size: 12px;
+    padding: 30px 0; border-top: 1px solid var(--border); margin-top: 30px;
+  }
 
-        /* Mobile Hamburger Icon */
-        .menu-toggle {
-            display: none;
-            color: var(--primary-gold);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Main Container Card */
-        .card-container {
-            width: 92%;
-            max-width: 920px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(212, 175, 55, 0.12);
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        /* Banner Section */
-        .hero-banner {
-            position: relative;
-            height: 260px;
-            background: linear-gradient(rgba(11, 15, 25, 0.45), rgba(11, 15, 25, 0.95)), 
-                        url('IMG_7820.jpeg') center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .symbol {
-            font-size: 2.5rem;
-            color: var(--primary-gold);
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
-        }
-
-        .hero-banner h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.1rem;
-            color: var(--light-gold);
-            letter-spacing: 2px;
-            margin-bottom: 0.3rem;
-        }
-
-        .hero-banner p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        /* Quick Stats Ribbon */
-        .quick-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
-            padding: 1.5rem;
-            background: rgba(11, 15, 25, 0.5);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-item i {
-            color: var(--primary-gold);
-            margin-bottom: 0.4rem;
-            font-size: 1.1rem;
-        }
-
-        .stat-item span {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .stat-item strong {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        /* Section Layout Adjustment for Better Mobile Spacing */
-        .section-block {
-            padding: 2rem 1.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            scroll-margin-top: 65px; /* Offset for sticky menu */
-        }
-
-        .section-title {
-            font-family: 'Cinzel', serif;
-            color: var(--primary-gold);
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            padding-bottom: 0.5rem;
-        }
-
-        /* Photo Gallery */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.2rem;
-        }
-
-        .photo-card {
-            position: relative;
-            height: 320px; /* Taller on mobile for better visibility */
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid rgba(212, 175, 55, 0.25);
-            background: rgba(0, 0, 0, 0.3);
-            cursor: pointer;
-            transition: all 0.4s ease;
-        }
-
-        .photo-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .photo-card:hover img {
-            transform: scale(1.08);
-        }
-
-        .photo-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem;
-            background: linear-gradient(transparent, rgba(11, 15, 25, 0.95));
-            color: var(--light-gold);
-            font-size: 0.85rem;
-            text-align: center;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        /* Details List */
-        .detail-list {
-            list-style: none;
-        }
-
-        .detail-list li {
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-            display: flex;
-            flex-direction: row;
-            line-height: 1.6;
-        }
-
-        .detail-list li strong {
-            color: var(--light-gold);
-            min-width: 140px;
-            display: inline-block;
-            font-weight: 600;
-        }
-
-        .detail-list li span {
-            color: var(--text-light);
-            flex: 1;
-        }
-
-        /* Lightbox Modal */
-        .modal-lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(5, 8, 15, 0.92);
-            backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-lightbox.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-lightbox img {
-            max-width: 90%;
-            max-height: 85vh;
-            border-radius: 12px;
-            border: 2px solid var(--primary-gold);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-            object-fit: contain;
-        }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            color: var(--light-gold);
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        /* Contact Section */
-        .contact-footer {
-            text-align: center;
-            padding: 2.5rem 1.5rem;
-            background: rgba(11, 15, 25, 0.85);
-            border-top: 1px solid var(--border-color);
-            scroll-margin-top: 65px;
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 1.2rem;
-        }
-
-        .btn-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: linear-gradient(135deg, #d4af37, #aa820a);
-            color: #000;
-            font-weight: 700;
-            padding: 0.85rem 1.8rem;
-            border-radius: 30px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-            border: none;
-            font-size: 0.95rem;
-        }
-
-        .btn-action.secondary {
-            background: transparent;
-            color: var(--primary-gold);
-            border: 1px solid var(--primary-gold);
-            box-shadow: none;
-        }
-
-        /* Fixed Bottom Copyright Footer Bar */
-        .fixed-bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 55px;
-            background: var(--nav-bg);
-            border-top: 1px solid var(--border-color);
-            backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 1.2rem;
-            z-index: 1000;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .copyright-text {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            color: var(--light-gold);
-        }
-
-        .footer-whatsapp-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #25d366;
-            color: #fff;
-            padding: 0.45rem 0.9rem;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.8rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 2px 10px rgba(37, 211, 102, 0.3);
-        }
-
-        .footer-whatsapp-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
-        }
-
-        /* Mobile Specific Styles */
-        @media (max-width: 768px) {
-            body {
-                padding-top: 65px;
-            }
-
-            .card-container {
-                width: 100%;
-                border-radius: 0; /* Full edge-to-edge feel on phones */
-                border: none;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 65px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 65px);
-                background: var(--nav-bg);
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 2rem;
-                transition: left 0.3s ease;
-                border-top: 1px solid rgba(255, 255, 255, 0.05);
-            }
-
-            .nav-links.active {
-                left: 0;
-            }
-
-            .nav-links a {
-                font-size: 1.2rem;
-            }
-
-            .quick-stats {
-                grid-template-columns: repeat(2, 1fr); /* 2x2 grid on mobile */
-            }
-
-            .detail-list li {
-                flex-direction: column;
-                margin-bottom: 1.2rem;
-            }
-
-            .detail-list li strong {
-                margin-bottom: 0.2rem;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-            }
-
-            .fixed-bottom-bar {
-                padding: 0 0.8rem;
-                font-size: 0.75rem;
-            }
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+  @media (max-width: 640px) {
+    .container { padding: 12px; }
+    header { padding: 16px; }
+    header h1 { font-size: 20px; }
+    .session-body { padding-left: 16px; }
+    .module-header h2 { font-size: 14px; }
+    .progress-wrap { padding: 12px; }
+  }
+  @media print {
+    .controls, .progress-wrap, .master-prompt button, .copy-li-btn { display: none; }
+    body { background: white; color: black; }
+  }
+</style>
 </head>
 <body>
+<div class="container">
 
-    <!-- Canvas Animation -->
-    <canvas id="canvas-bg"></canvas>
-
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <a href="#about" class="nav-logo">🕌 UMER INAMDAR</a>
-        <div class="menu-toggle" onclick="toggleMenu()">
-            <i class="fa-solid fa-bars" id="menuIcon"></i>
-        </div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#about" onclick="toggleMenu()"><i class="fa-solid fa-user"></i> About</a></li>
-            <li><a href="#photos" onclick="toggleMenu()"><i class="fa-solid fa-camera"></i> Photos</a></li>
-            <li><a href="#career" onclick="toggleMenu()"><i class="fa-solid fa-briefcase"></i> Career</a></li>
-            <li><a href="#family" onclick="toggleMenu()"><i class="fa-solid fa-users"></i> Family</a></li>
-            <li><a href="#lifestyle" onclick="toggleMenu()"><i class="fa-solid fa-compass"></i> Lifestyle</a></li>
-            <li><a href="#contact" onclick="toggleMenu()"><i class="fa-solid fa-phone"></i> Contact</a></li>
-        </ul>
-    </nav>
-
-    <!-- Main Container Card -->
-    <div class="card-container">
-        
-        <!-- Hero Section -->
-        <div class="hero-banner" id="about">
-            <div class="symbol">🕌</div>
-            <h1>UMER HANIF INAMDAR</h1>
-            <p>Software Engineer</p>
-        </div>
-
-        <!-- Quick Stats Ribbon -->
-        <div class="quick-stats">
-            <div class="stat-item">
-                <i class="fa-solid fa-cake-candles"></i>
-                <span>Date of Birth</span>
-                <strong>26 / 10 / 1999</strong>
-            </div>
-            <div class="stat-item">
-                <i class="fa-solid fa-ruler-vertical"></i>
-                <span>Height</span>
-                <strong>6'0" (6 Feet)</strong>
-            </div>
-            <div class="stat-item">
-                <i class="fa-solid fa-heart"></i>
-                <span>Status</span>
-                <strong>Single</strong>
-            </div>
-            <div class="stat-item">
-                <i class="fa-solid fa-location-dot"></i>
-                <span>Native</span>
-                <strong>Pune</strong>
-            </div>
-        </div>
-
-        <!-- Photo Gallery Section -->
-        <div class="section-block reveal" id="photos">
-            <div class="section-title">
-                <i class="fa-solid fa-camera-retro"></i> Photo Gallery
-            </div>
-            <div class="gallery-grid">
-                <div class="photo-card" onclick="openPhotoModal('IMG_7806.jpeg')">
-                    <img src="IMG_7806.jpeg" alt="Umer Hanif Inamdar - Photo 1">
-                    <div class="photo-overlay"><i class="fa-solid fa-expand"></i> Tap to View Full Photo</div>
-                </div>
-                <div class="photo-card" onclick="openPhotoModal('IMG_0682.jpeg')">
-                    <img src="IMG_0682.jpeg" alt="Umer Hanif Inamdar - Photo 2">
-                    <div class="photo-overlay"><i class="fa-solid fa-expand"></i> Tap to View Full Photo</div>
-                </div>
-                <div class="photo-card" onclick="openPhotoModal('IMG_4458.jpeg')">
-                    <img src="IMG_4458.jpeg" alt="Umer Hanif Inamdar - Photo 3">
-                    <div class="photo-overlay"><i class="fa-solid fa-expand"></i> Tap to View Full Photo</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Education & Career Section -->
-        <div class="section-block reveal" id="career">
-            <div class="section-title">
-                <i class="fa-solid fa-graduation-cap"></i> Education & Career
-            </div>
-            <ul class="detail-list">
-                <li><strong>Education:</strong> <span>B.E. in Software Engineering (Graduated: 2023)</span></li>
-                <li><strong>Language Studies:</strong> <span>Currently Pursuing French Language Studies</span></li>
-                <li><strong>Work Experience:</strong> 
-                    <span>
-                        • Software Trainee Engineer – QuEST Global, Bengaluru (2023–2024)<br>
-                        • Analyst – eClerx (2024–2026)
-                    </span>
-                </li>
-                <li><strong>Future Plans:</strong> <span>Joining a job for a few years with long-term plans to move abroad</span></li>
-            </ul>
-        </div>
-
-        <!-- Religious Beliefs Section -->
-        <div class="section-block reveal">
-            <div class="section-title">
-                <i class="fa-solid fa-mosque"></i> Religious Practice
-            </div>
-            <ul class="detail-list">
-                <li><strong>Maslak:</strong> <span>Believes in a united community and respects all maslaks</span></li>
-                <li><strong>Prayers:</strong> <span>Offers daily prayers (3 times on time during work hours, and 2 times after Isha as Qaza)</span></li>
-            </ul>
-        </div>
-
-        <!-- Family Details Section -->
-        <div class="section-block reveal" id="family">
-            <div class="section-title">
-                <i class="fa-solid fa-users"></i> Family Details
-            </div>
-            <ul class="detail-list">
-                <li><strong>Father's Name:</strong> <span>Hanif Inamdar</span></li>
-                <li><strong>Father's Job:</strong> <span>Government Employee (Driver in MSRTC)</span></li>
-                <li><strong>Mother's Name:</strong> <span>Naziya Inamdar</span></li>
-                <li><strong>Mother's Occupation:</strong> <span>Housewife</span></li>
-                <li><strong>Brothers:</strong> <span>1 Younger Brother (Married)</span></li>
-                <li><strong>Family Members:</strong> <span>5 Members</span></li>
-            </ul>
-        </div>
-
-        <!-- Residence & Real Estate Section -->
-        <div class="section-block reveal">
-            <div class="section-title">
-                <i class="fa-solid fa-house-chimney"></i> Residence & Real Estate
-            </div>
-            <ul class="detail-list">
-                <li><strong>Current Residence:</strong> <span>Mudhale, Baramati</span></li>
-                <li><strong>Native Place:</strong> <span>Pune</span></li>
-                <li><strong>Home Property:</strong> <span>Home owned by parents. (No interest in buying or settling down in one place long-term as planning to move abroad)</span></li>
-            </ul>
-        </div>
-
-        <!-- Hobbies & Expectations Section -->
-        <div class="section-block reveal" id="lifestyle">
-            <div class="section-title">
-                <i class="fa-solid fa-compass"></i> Hobbies & Expectations
-            </div>
-            <ul class="detail-list">
-                <li><strong>Hobbies:</strong> <span>Cooking & Computers</span></li>
-                <li><strong>Expectations:</strong> <span>No expectations. Believes everyone is beautiful in their own unique way and wants them as they are.</span></li>
-            </ul>
-        </div>
-
-        <!-- Footer Call to Action Section -->
-        <div class="contact-footer" id="contact">
-            <p style="color: var(--text-muted); font-size: 0.9rem;">To get in touch or discuss further:</p>
-            <div class="action-buttons">
-                <a href="tel:8530139154" class="btn-action">
-                    <i class="fa-solid fa-phone"></i> Call: +91 8530139154
-                </a>
-                <a href="https://wa.me/918530139154" target="_blank" class="btn-action secondary">
-                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                </a>
-            </div>
-            <p style="margin-top: 1.8rem; color: var(--primary-gold); font-family: 'Cinzel', serif; letter-spacing: 2px;">
-                Alhamdulillah
-            </p>
-        </div>
-
+  <header>
+    <h1>🚀 Agentic AI — Build-to-Job Program</h1>
+    <p style="color: var(--muted); font-size: 13px;">
+      25 sessions · ~4–6 weeks · 70% building · Portfolio + Interviews + LinkedIn brand
+    </p>
+    <div class="meta">
+      <span>🐍 Python Intermediate</span>
+      <span>⚡ LangGraph + MCP</span>
+      <span>🆓 Free APIs</span>
+      <span>🎯 Junior Agentic AI Engineer</span>
+      <span>📣 LinkedIn Daily</span>
     </div>
+  </header>
 
-    <!-- Fixed Bottom Sticky Copyright & WhatsApp Bar -->
-    <div class="fixed-bottom-bar">
-        <div class="copyright-text">
-            © Umer Hanif Inamdar
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span>Progress: <strong id="progressText">0 / 25 sessions</strong></span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="🔍 Search sessions..." />
+    <button onclick="expandAll()">Expand All</button>
+    <button onclick="collapseAll()">Collapse All</button>
+    <button class="danger" onclick="resetProgress()">Reset</button>
+  </div>
+
+  <div class="master-prompt">
+    <h3>🔑 Master Prompt — paste at start of every new chat</h3>
+    <pre id="masterPrompt">You are my Agentic AI instructor for the Build-to-Job Program.
+
+MY PROFILE:
+- Name: [Juber]
+- Python: intermediate, rusty
+- APIs: free only (Groq / Gemini / Ollama)
+- Goal: build a portfolio + get hired as Agentic AI Engineer
+- LinkedIn goal: post daily, build visibility, attract recruiters
+
+COURSE: 25 SESSIONS
+M0 Setup: 00 Environment & Python Refresh
+M1 Foundations: 01 Agent Basics | 02 ReAct Loop | 03 Function Calling | 04 First Agent
+M2 Core Skills: 05 Tool Design | 06 Short-term Memory | 07 Long-term Memory | 08 RAG | 09 Planning | 09.5 Job Prep
+M3 Frameworks: 10 LangGraph Basics | 11 LangGraph State | 12 MCP | 13 Framework Compare
+M4 Multi-Agent: 14 Patterns | 15 Handoffs | 16 Reflection | 17 HITL | 17.5 Job Prep
+M5 Production: 18 Evaluation | 19 Observability | 20 Guardrails/Cost | 21 Reliability/Async/Deploy
+M6 Capstone: 22 Job Research Agent | 22.5 Mock Interview
+M7 Career: 23 Production Polish | 24 GitHub+Resume+LinkedIn | 25 Final Assessment
+
+MY PROGRESS:
+[PASTE COMPLETED SESSION LOGS HERE]
+
+TODAY'S REQUEST:
+Teach me Session [N]: [Topic]
+
+OUTPUT STRUCTURE (STRICT):
+1. CONCEPT (5-min read, no fluff)
+2. BUILD TASK (starter code + run instructions)
+3. CHALLENGES (1-2)
+4. SESSION LOG BLOCK (for my markdown file)
+5. INTERVIEW ANCHOR (2-min answer)
+6. 🆕 YOUR JOB — how this session maps to real hiring
+7. 🆕 LINKEDIN POST PROMPT — copy-paste prompt that generates my LinkedIn post
+
+Rules:
+- Never re-teach completed sessions.
+- Free APIs only.
+- Debug any error I paste line by line.
+- End with: "Next session: [N+1] — [topic]".
+- Keep it tight — no filler.</pre>
+    <button onclick="copyPrompt('masterPrompt', this)">📋 Copy Master Prompt</button>
+  </div>
+
+  <div id="modules"></div>
+
+  <footer>
+    Built for the journey from Python-Intermediate → Agentic AI Engineer.<br/>
+    Progress saved locally in your browser.
+  </footer>
+</div>
+
+<script>
+const COURSE = [
+  {
+    module: "MODULE 0 — Setup & Python Refresh",
+    sessions: [
+      {
+        num: "00", title: "Environment & Prerequisites",
+        learn: ["Python project structure","Virtual environments & pip",".env files & API keys","Git & GitHub basics","REST APIs, HTTP, JSON","Async basics"],
+        refresh: ["Functions, classes, lists, dicts","Type hints, exceptions, file I/O","async/await","Pydantic basics"],
+        build: ["Mini Project: API-powered Python CLI"],
+        deliverables: ["GitHub repo","requirements.txt",".env.example","README","Working app"],
+        interview: ["What is an API?","What is REST?","What is JSON?","Why use environment variables?","Sync vs async programming?"],
+        job: "Every agent job assumes you can set up a Python project, manage secrets safely, and call APIs. This is the baseline recruiters check in the first technical screen.",
+        linkedin: "Generate a LinkedIn post for Session 00. Hook: 'Day 0 of my Agentic AI journey — setup.' Mention: set up Python env, got a free Groq API key, built a CLI tool that calls an API. Include 1 concrete thing (e.g. 'learned why .env files matter — never hardcode keys'). End with a question inviting others who are learning AI. 3-5 hashtags: #AgenticAI #Python #BuildInPublic #AIEngineering."
+      }
+    ]
+  },
+  {
+    module: "MODULE 1 — Agent Fundamentals",
+    sessions: [
+      {
+        num: "01", title: "What Is an AI Agent?",
+        learn: ["AI model vs LLM","Chatbot vs Workflow vs Agent","Agentic system","Tool, Environment, State, Goal"],
+        build: ["Agent architecture diagram","Agent vs chatbot comparison"],
+        interview: ["Define an AI agent in 60 seconds","Agent vs chatbot?","Agent vs workflow?"],
+        job: "Interviewers ALWAYS open with 'Define an AI agent.' Most candidates answer vaguely. If you can distinguish agent vs chatbot vs workflow crisply, you instantly sound 1 level above your resume.",
+        linkedin: "Generate a LinkedIn post for Session 01. Hook: 'Most people confuse chatbots with agents. Here is the real difference.' Explain: chatbot (Q&A), workflow (fixed steps), agent (LLM decides next action). Include a concrete example (e.g. weather bot vs agent that decides to check weather, then book a cab). End with: 'Which one are you building?' 3-5 hashtags: #AgenticAI #LLM #AIEngineering."
+      },
+      {
+        num: "02", title: "The Agent Loop / ReAct",
+        learn: ["Reasoning, Acting, Observation","ReAct concept","Agent loop & iteration","Termination conditions"],
+        build: ["Simple agent loop diagram: User → LLM → Reason → Action → Tool → Observation → LLM → Answer"],
+        interview: ["Explain the ReAct loop","What causes an agent loop to stop?","What if the agent picks the wrong tool?"],
+        job: "ReAct is the backbone of every agent framework (LangGraph, CrewAI, AutoGPT). Understanding the loop means you can debug ANY agent, in any framework, on day 1 of the job.",
+        linkedin: "Generate a LinkedIn post for Session 02. Hook: 'Every AI agent runs on one simple loop — and once you see it, you can debug any agent.' Explain the ReAct loop: Reason → Act → Observe → Repeat until done. Include one real gotcha (e.g. 'without a stop condition, the agent loops forever'). End with: 'What would you use as a stop condition?' 3-5 hashtags: #AgenticAI #ReAct #LLM."
+      },
+      {
+        num: "03", title: "LLM Tool / Function Calling",
+        learn: ["Function calling","Tool schemas & arguments","Structured outputs & JSON Schema","Pydantic validation"],
+        build: ["tool_call_demo.py with 4 tools: Calculator, Search, Weather, File reader"],
+        interview: ["What is function calling?","How does an LLM call a Python function?","Why use structured tool schemas?"],
+        job: "Function calling is THE most requested skill in agent job listings. 'Experience with OpenAI function calling or equivalent' is in 80% of postings. This session makes you check that box.",
+        linkedin: "Generate a LinkedIn post for Session 03. Hook: 'The LLM does not call your Python function. Here is what actually happens.' Explain: LLM outputs a JSON tool call → your code executes it → result goes back to LLM. Include your 4 tools (calculator, search, weather, file reader). End with: 'The magic isn't the LLM — it's the schema.' 3-5 hashtags: #FunctionCalling #LLM #AgenticAI."
+      },
+      {
+        num: "04", title: "Build Your First Agent From Scratch",
+        learn: ["No framework — pure Python","Full agent cycle: understand → select → execute → reason → answer"],
+        build: ["agent_v1.py — full agent loop with tool selection"],
+        interview: ["How would you build an agent without a framework?","Main components of an agent?"],
+        job: "When an interviewer asks 'Explain how an agent works under the hood,' most candidates say 'I used LangChain.' If you say 'I built one from scratch in 50 lines,' you sound senior. This is the differentiator.",
+        linkedin: "Generate a LinkedIn post for Session 04. Hook: 'Day 4 of building agents from scratch — no LangChain, no frameworks, 50 lines of Python.' List what your agent can do (read request, pick tool, execute, reason, answer). Mention the hardest part (loop control / infinite tool calls). End with: 'Frameworks are great. But building from scratch once changes how you use them forever.' 3-5 hashtags: #AgenticAI #Python #BuildInPublic #LLM."
+      }
+    ]
+  },
+  {
+    module: "MODULE 2 — Core Agent Engineering",
+    sessions: [
+      {
+        num: "05", title: "Tool Design Patterns",
+        learn: ["Tool boundaries & granularity","Descriptions & validation","Error handling & permissions","Side effects"],
+        build: ["Reusable toolkit: tools/calculator.py, search.py, file_reader.py, weather.py"],
+        interview: ["How do you decide what becomes a tool?","What makes a good tool?","Why not one giant tool?"],
+        job: "Companies pay for engineers who can design clean tools — because bad tools cause most agent failures in production. This is the difference between a demo and a product.",
+        linkedin: "Generate a LinkedIn post for Session 05. Hook: 'Most agents fail not because of the LLM — but because of bad tool design.' Share 3 rules: (1) tools should be atomic, (2) descriptions are prompts, (3) validate inputs. Include your toolkit folder structure. End with: 'What's the worst tool design you've seen?' 3-5 hashtags: #AgenticAI #ToolDesign #LLM."
+      },
+      {
+        num: "06", title: "Short-Term Memory & State",
+        learn: ["Conversation history","Message state","Context window limits","State vs memory"],
+        build: ["Agent that remembers the last 10 turns"],
+        interview: ["How does an agent maintain conversation state?","State vs memory?"],
+        job: "Every chatbot, support agent, and copilot job expects you to understand state management. It's tested in system design rounds at every AI company.",
+        linkedin: "Generate a LinkedIn post for Session 06. Hook: 'Your agent forgot your name 3 messages ago. Here is why.' Explain: state = what's in this conversation; memory = what persists. Show a small demo ('My name is X' then later 'What is my name?'). End with: 'State is easy. Memory is where it gets hard.' 3-5 hashtags: #AgenticAI #Memory #LLM."
+      },
+      {
+        num: "07", title: "Long-Term Memory",
+        learn: ["Persistent memory","Embeddings & vector DBs","Semantic similarity","Metadata & retrieval"],
+        build: ["Agent that remembers info across separate sessions"],
+        interview: ["Design long-term memory for an agent","Vector DB vs traditional DB?"],
+        job: "Long-term memory is what separates ChatGPT from a real product (like a personal AI assistant). Startups hire for this specifically. Knowing vector DBs + embeddings is non-negotiable in 2026.",
+        linkedin: "Generate a LinkedIn post for Session 07. Hook: 'How do you make an AI agent remember you across sessions?' Explain embeddings + vector DB in plain English. Mention: session 1 stores memory, session 2 retrieves it. Include one concrete limitation (e.g. 'semantic search isn't perfect — sometimes it retrieves the wrong memory'). End with: 'Would you trust an agent with long-term memory?' 3-5 hashtags: #AgenticAI #VectorDatabase #Embeddings."
+      },
+      {
+        num: "08", title: "RAG for Agents",
+        learn: ["RAG pipeline","Document loading, chunking, embeddings","Retrieval & reranking","Citations & hallucination","Retrieval evaluation"],
+        build: ["PDF Knowledge Agent — upload PDFs, embed, retrieve, answer with citations"],
+        interview: ["Explain RAG end-to-end","Why does RAG fail?","What is chunking? What is an embedding?"],
+        job: "RAG is in nearly every AI job description. If you can explain chunking strategy, retrieval failure modes, and why RAG hallucinates — you're ahead of 90% of applicants.",
+        linkedin: "Generate a LinkedIn post for Session 08. Hook: 'RAG is not dead. But 90% of RAG implementations fail for the same reason.' Explain the RAG pipeline (parse → chunk → embed → retrieve → rerank → answer). Mention one failure (e.g. 'bad chunking = bad retrieval = hallucinated answers'). End with: 'What's your chunk size?' 3-5 hashtags: #RAG #AgenticAI #LLM #Retrieval."
+      },
+      {
+        num: "09", title: "Planning & Task Decomposition",
+        learn: ["Planning, decomposition","Planner vs Executor","Dependencies & replanning"],
+        build: ["Task Planning Agent: e.g. 'Research top 5 AI companies' → plan → execute → report"],
+        interview: ["Planner vs Executor?","When should an agent create a plan?","Why does planning help?"],
+        job: "Multi-step agents (research, code generation, workflow automation) all rely on planning. It's the #1 topic in senior AI engineer interviews in 2026.",
+        linkedin: "Generate a LinkedIn post for Session 09. Hook: 'Why one-shot agents fail on complex tasks — and how planning fixes it.' Explain: planner breaks goal into steps → executor runs them. Mention the split (why not one big prompt). Include your demo ('research top 5 AI companies' → 5 steps). End with: 'Planner or executor first?' 3-5 hashtags: #AgenticAI #Planning #LLM."
+      },
+      {
+        num: "09.5", title: "JOB PREP #1 — Explain Your Build", jobprep: true,
+        learn: ["60-second, 2-minute, 5-minute explanations of Projects 1–9"],
+        interview: ["What did you build?","Why this architecture?","What failed?","How did you fix it?","What would you improve?"],
+        job: "You now have 9 real projects. This session converts them into interview narratives. Most candidates can't do this — and lose offers because of it.",
+        linkedin: "Generate a LinkedIn post for Session 09.5. Hook: 'I've built 9 AI agent projects in 9 days. Here are 3 lessons that would have saved me 50 hours.' List 3 real lessons from Sessions 01-09 (e.g. tool design matters more than the LLM, memory is hard, RAG isn't magic). End with: 'Which lesson hit home?' 3-5 hashtags: #AgenticAI #BuildInPublic #CareerGrowth."
+      }
+    ]
+  },
+  {
+    module: "MODULE 3 — LangGraph & Modern Frameworks",
+    sessions: [
+      {
+        num: "10", title: "LangGraph Fundamentals",
+        learn: ["Why frameworks exist","Graph-based agents","Nodes, edges, state","Graph execution & conditional routing"],
+        build: ["Rebuild agent_v1 using LangGraph"],
+        interview: ["Why LangGraph?","What problem does it solve?","LangGraph vs raw Python?"],
+        job: "'LangGraph experience' is now in a third of Agentic AI job posts. Learning it makes you directly hirable for roles that filter on it.",
+        linkedin: "Generate a LinkedIn post for Session 10. Hook: 'I rebuilt my from-scratch agent in LangGraph. It took 30 minutes. Here is what changed.' Explain: graph-based agents (nodes = functions, edges = flow). Mention one thing you liked and one friction point. End with: 'LangGraph or raw Python?' 3-5 hashtags: #LangGraph #AgenticAI #LLM."
+      },
+      {
+        num: "11", title: "LangGraph State, Nodes & Edges",
+        learn: ["State, nodes, edges","Conditional edges","Loops, checkpoints, persistence"],
+        build: ["Multi-step agent: START → Planner → Research → Analysis → Writer → END"],
+        interview: ["Explain LangGraph's state model","What is a node/edge?","How do conditional edges work?"],
+        job: "LangGraph's state model is the most asked-about concept in LangGraph interviews. Getting this fluent = clearing the round.",
+        linkedin: "Generate a LinkedIn post for Session 11. Hook: 'LangGraph's state model is what makes it powerful — and confusing at first.' Explain: state = shared data structure; nodes read/write it; edges route. Include the planner→research→analysis→writer graph. End with: 'What state keys do you use?' 3-5 hashtags: #LangGraph #AgenticAI #StateManagement."
+      },
+      {
+        num: "12", title: "MCP — Model Context Protocol",
+        learn: ["MCP client/server","Tools, resources, prompts","Tool discovery","Permissions & security"],
+        build: ["Simple MCP server exposing Files, Database, and API tools"],
+        interview: ["What is MCP?","What problem does it solve?","MCP vs function calling?"],
+        job: "MCP is the hottest 2025-2026 topic. Anthropic, OpenAI, and every serious agent company now support it. Knowing MCP = knowing what's next.",
+        linkedin: "Generate a LinkedIn post for Session 12. Hook: 'MCP is the most important thing in agentic AI right now — and most engineers haven't touched it yet.' Explain: MCP = a standard way for agents to talk to tools/data. Mention the client/server split. Contrast with function calling (function calling = one-shot; MCP = reusable protocol). End with: 'Have you built an MCP server yet?' 3-5 hashtags: #MCP #AgenticAI #Anthropic #LLM."
+      },
+      {
+        num: "13", title: "Agent Framework Comparison",
+        learn: ["Raw Python vs LangGraph vs OpenAI Agents SDK vs CrewAI vs LlamaIndex","Architecture, state, multi-agent, tool support, RAG, debugging, production readiness"],
+        build: ["Framework decision document"],
+        interview: ["How do you choose a framework?","LangGraph vs CrewAI?","Framework vs raw Python?"],
+        job: "Interviewers love asking 'When would you use X vs Y?' because it tests judgment, not memorization. This session builds that judgment.",
+        linkedin: "Generate a LinkedIn post for Session 13. Hook: 'LangGraph vs CrewAI vs raw Python — here is how I now decide.' Share your decision framework (e.g. 'LangGraph for control, CrewAI for teams, raw Python when I need to understand everything'). Include one trade-off. End with: 'What's your go-to framework?' 3-5 hashtags: #LangGraph #CrewAI #AgenticAI #LLM."
+      }
+    ]
+  },
+  {
+    module: "MODULE 4 — Multi-Agent Systems",
+    sessions: [
+      {
+        num: "14", title: "Multi-Agent Architecture Patterns",
+        learn: ["Supervisor pattern","Peer-to-peer","Hierarchical","Shared state"],
+        build: ["Supervisor + 2 workers (Researcher, Analyst)"],
+        interview: ["When to use multiple agents?","When is single-agent better?"],
+        job: "Multi-agent is what enterprises are buying in 2026. Every serious agent platform (CrewAI, AutoGen, LangGraph) ships multi-agent primitives. This session puts you in that market.",
+        linkedin: "Generate a LinkedIn post for Session 14. Hook: 'Multi-agent systems sound impressive — but most teams use them wrong.' Explain: supervisor + workers pattern. Mention when one agent is better than three. Include your Researcher+Analyst demo. End with: 'When did multi-agent actually help you?' 3-5 hashtags: #MultiAgent #AgenticAI #LLM."
+      },
+      {
+        num: "15", title: "Agent Communication & Handoffs",
+        learn: ["Handoffs, shared state","Message passing","Context transfer","Responsibilities"],
+        build: ["Content team: Researcher → Writer → Editor"],
+        interview: ["How do agents communicate?","What info should be passed?"],
+        job: "Real systems have specialized agents handing off work. Understanding handoffs is what separates production agents from demo agents.",
+        linkedin: "Generate a LinkedIn post for Session 15. Hook: 'The hardest part of multi-agent systems is not the agents — it's the handoffs.' Explain: each agent needs clean input, clean output, clear responsibility. Include your Researcher→Writer→Editor pipeline. End with: 'How do you handle context transfer?' 3-5 hashtags: #MultiAgent #AgenticAI #LLM."
+      },
+      {
+        num: "16", title: "Reflection & Self-Critique Agents",
+        learn: ["Reflection, criticism","Self-evaluation","Iterative improvement"],
+        build: ["Generate → Evaluate → Critique → Improve → Final"],
+        interview: ["What is a reflection agent?","When does reflection help?","When does it waste tokens?"],
+        job: "Reflection loops are how you get agents from 80% to 95% quality. Enterprise buyers pay for reliability, not speed.",
+        linkedin: "Generate a LinkedIn post for Session 16. Hook: 'The cheapest way to make your agent 10x better: let it critique itself.' Explain: generate → critique → improve. Mention the cost (2x tokens) and when it's worth it. End with: 'Reflection loop — worth it?' 3-5 hashtags: #AgenticAI #SelfCritique #LLM."
+      },
+      {
+        num: "17", title: "Human-in-the-Loop Agents",
+        learn: ["Human approval & escalation","Sensitive actions","Approval workflows","Interrupt/resume"],
+        build: ["Agent requiring approval before email, file deletion, external actions"],
+        interview: ["When should a human stay in the loop?","Which actions need approval?"],
+        job: "Every enterprise agent deployment requires HITL for sensitive actions. This is a legal/compliance requirement — not optional. Jobs explicitly ask for it.",
+        linkedin: "Generate a LinkedIn post for Session 17. Hook: 'An AI agent should never send that email without asking you first. Here is how to enforce it.' Explain: interrupts, approval gates, audit trails. Mention your demo (agent pauses before sending email). End with: 'What actions should always require approval?' 3-5 hashtags: #HITL #AgenticAI #ResponsibleAI."
+      },
+      {
+        num: "17.5", title: "JOB PREP #2 — System Design Challenge", jobprep: true,
+        learn: ["Design an AI Customer Support Agent for 10,000 users","Cover: architecture, LLM, RAG, tools, memory, DB, auth, rate limits, observability, evaluation, escalation"],
+        job: "System design is 50% of senior interviews. This session puts you through the exact exercise MAANG/startup interviewers run.",
+        linkedin: "Generate a LinkedIn post for Session 17.5. Hook: 'I designed an AI customer support agent for 10,000 users. Here is the architecture.' Share 3-4 components (RAG for docs, HITL for refunds, Langfuse for tracing). Mention one hard trade-off. End with: 'How would you scale this to 100K?' 3-5 hashtags: #SystemDesign #AgenticAI #Interview."
+      }
+    ]
+  },
+  {
+    module: "MODULE 5 — Production Agent Engineering",
+    sessions: [
+      {
+        num: "18", title: "Agent Evaluation",
+        learn: ["Non-determinism","Test cases & datasets","LLM-as-a-judge","Rule-based eval","Accuracy, relevance, hallucination, tool accuracy, latency, cost"],
+        build: ["Evaluation harness: 100 test cases → agent → metrics → report"],
+        interview: ["How do you evaluate an AI agent?","How do you evaluate a non-deterministic system?","What metrics matter?"],
+        job: "Evaluation is the #1 skill listed in senior AI engineer job posts in 2026. Most candidates can't answer this. You will.",
+        linkedin: "Generate a LinkedIn post for Session 18. Hook: 'Everyone builds agents. Almost nobody evaluates them. That is the hiring gap.' Explain: LLM-as-judge, golden datasets, regression tests. Mention your 100-case harness. End with: 'How do you measure agent quality?' 3-5 hashtags: #AIEvals #AgenticAI #LLM."
+      },
+      {
+        num: "19", title: "Observability & Tracing",
+        learn: ["Logging, tracing, spans","Token usage, latency, errors","Langfuse + LangSmith, OpenTelemetry"],
+        build: ["Traced agent with full LLM + tool call traces"],
+        interview: ["How do you debug an agent in production?","What would you log?","Why is tracing important?"],
+        job: "In production, agents fail in weird ways. Observability is how you debug them at 2 AM. Every AI company hires for this.",
+        linkedin: "Generate a LinkedIn post for Session 19. Hook: 'When an agent misbehaves in production, you can't just add a print statement.' Explain: tracing, spans, Langfuse. Include one thing you now log that you didn't before. End with: 'Langfuse or LangSmith?' 3-5 hashtags: #Observability #AgenticAI #Langfuse."
+      },
+      {
+        num: "20", title: "Guardrails, Security & Cost Control",
+        learn: ["Prompt injection, tool abuse, data leakage","Permission boundaries","Token budgets, max iterations, rate limits, caching, model selection"],
+        build: ["Budget-aware agent: max 10 tool calls, 30s timeout, token + cost limits"],
+        interview: ["How do you prevent runaway LLM costs?","How do you protect tools from injection?","How do you limit permissions?"],
+        job: "Security + cost = what CTOs care about. Engineers who can speak to this get promoted fast. Most junior devs can't. You can.",
+        linkedin: "Generate a LinkedIn post for Session 20. Hook: 'An agent burned $2 in 30 seconds on my desk. Here is how I stopped it.' Explain: token budgets, max iterations, rate limits. Mention one attack (prompt injection). End with: 'What's your max tool calls per session?' 3-5 hashtags: #AISecurity #AgenticAI #CostOptimization."
+      },
+      {
+        num: "21", title: "Reliability, Async & Deployment",
+        learn: ["API/tool/LLM failures, timeouts, invalid JSON","Retries, exponential backoff, fallbacks","async, await, asyncio, concurrent tool calls","FastAPI deployment"],
+        build: ["Frontend → FastAPI → Agent → LLM → RAG + Tools → DB. Deploy it."],
+        interview: ["How would you deploy an agent?","How do you handle API failures?","Why async?"],
+        job: "Anyone can demo an agent locally. Deploying one that handles failures, retries, and concurrency is what gets you hired.",
+        linkedin: "Generate a LinkedIn post for Session 21. Hook: 'A local agent demo and a deployed agent are two completely different beasts.' Explain: retries, backoff, async tool calls, FastAPI deployment. Share your live URL. End with: 'What broke first when you deployed?' 3-5 hashtags: #FastAPI #AgenticAI #Deployment."
+      }
+    ]
+  },
+  {
+    module: "MODULE 6 — Capstone Project",
+    sessions: [
+      {
+        num: "22", title: "Capstone — AI Job Research & Application Assistant",
+        learn: ["Full production agent: User → Resume → Agent → Job Search → Analysis → Skill Match → Recommendation → Human Approval → Application Prep"],
+        build: ["Frontend (HTML/JS), Backend (FastAPI), Agent (LangGraph), RAG, Tools, DB, Observability"],
+        interview: ["Walk me through your best project","Why this architecture?","What failed and how did you fix it?"],
+        job: "This is your flagship portfolio piece. It showcases every skill: RAG, tools, multi-step agent, HITL, deployment, observability. This is what gets you the offer.",
+        linkedin: "Generate a LinkedIn post for Session 22. Hook: 'I built an AI agent that researches jobs, matches them against my resume, and preps applications — all with my approval.' List 4-5 features. Mention tech stack (LangGraph, FastAPI, RAG, Langfuse). Include a demo link. End with: 'Would you use this?' 3-5 hashtags: #AgenticAI #LangGraph #PortfolioProject #BuildInPublic."
+      },
+      {
+        num: "22.5", title: "JOB PREP #3 — Full Mock Interview", jobprep: true,
+        learn: ["Python, LLM, Agents, RAG, LangGraph, MCP, Multi-Agent, Production, System Design, Projects"],
+        job: "This is your dress rehearsal. Everything you've learned gets tested here. If you pass this mock, you're interview-ready.",
+        linkedin: "Generate a LinkedIn post for Session 22.5. Hook: '25 days ago I couldn't define an AI agent. Today I passed a full agentic AI mock interview.' List 3 questions that used to scare you. Mention what you can now answer. End with: 'Ready for the real thing.' 3-5 hashtags: #AgenticAI #Interview #BuildInPublic."
+      }
+    ]
+  },
+  {
+    module: "MODULE 7 — Portfolio & Job Preparation",
+    sessions: [
+      {
+        num: "23", title: "Production Polish",
+        learn: ["Turn 'works on my machine' into 'professionally demonstrable'"],
+        build: ["Add auth, error handling, logging, loading states, API docs, env vars, Docker, tests, README, architecture diagram, screenshots, demo video"],
+        interview: ["Why does this matter for hiring?","How do you make a project portfolio-ready?"],
+        job: "Two candidates, same code, one has Docker + tests + README + demo video. One gets the offer. That's it.",
+        linkedin: "Generate a LinkedIn post for Session 23. Hook: 'Your GitHub project is 80% done. The last 20% is what gets you hired.' Explain: README, Docker, tests, demo video. Mention one thing you added this session. End with: 'What's the first thing you look for in a portfolio?' 3-5 hashtags: #GitHub #Portfolio #AgenticAI."
+      },
+      {
+        num: "24", title: "GitHub + Resume + LinkedIn",
+        learn: ["README structure","Resume: Built/Designed/Implemented/Deployed/Evaluated/Optimized","LinkedIn content strategy"],
+        build: ["Polished GitHub + resume + LinkedIn presence"],
+        interview: ["How do you present a project?","How do you talk about challenges?"],
+        job: "Recruiters skim your resume in 6 seconds. This session rebuilds yours around verbs that hire: Built, Designed, Deployed, Evaluated.",
+        linkedin: "Generate a LinkedIn post for Session 24. Hook: 'Recruiters spend 6 seconds on your resume. Here is what they should see.' Share your resume bullet formula: Built X → Designed Y → Deployed Z → Evaluated with W. Include one before/after example. End with: 'Built or Learned — which word do you use?' 3-5 hashtags: #Resume #Career #AgenticAI."
+      },
+      {
+        num: "25", title: "Final Job Readiness Assessment",
+        learn: ["40+ self-graded questions across every module"],
+        build: ["Self-assessment scorecard + gap plan"],
+        interview: ["Everything from Sessions 00-24"],
+        job: "You're done. This session is your final audit. Anything you can't answer = your next week's study plan. Then you apply.",
+        linkedin: "Generate a LinkedIn post for Session 25. Hook: '25 sessions. 20+ projects. 1 portfolio. Here is what I built and what's next.' Recap the journey in 5 lines. List your GitHub + capstone link. Mention what's next (open to Agentic AI roles). End with: 'Open to opportunities — DM me.' 3-5 hashtags: #AgenticAI #OpenToWork #BuildInPublic."
+      }
+    ]
+  }
+];
+
+const STORAGE_KEY = "agentic-ai-progress-v2";
+let progress = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+
+function saveProgress() { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
+
+function render() {
+  const root = document.getElementById("modules");
+  root.innerHTML = "";
+  let totalSessions = 0;
+
+  COURSE.forEach((mod, mi) => {
+    const div = document.createElement("div");
+    div.className = "module";
+    div.dataset.module = mi;
+
+    const sessionCount = mod.sessions.length;
+    totalSessions += sessionCount;
+
+    let sessionsHTML = "";
+    mod.sessions.forEach((s) => {
+      const key = `s-${s.num}`;
+      const done = progress[key] || false;
+      const collapsed = progress[`c-${s.num}`] !== false;
+
+      let body = "";
+      if (s.learn) body += `<h4>📖 Learn</h4><ul>${s.learn.map(x => `<li>${x}</li>`).join("")}</ul>`;
+      if (s.refresh) body += `<h4>🔄 Python Refresh</h4><ul>${s.refresh.map(x => `<li>${x}</li>`).join("")}</ul>`;
+      if (s.build) body += `<h4>🔨 Build</h4><ul>${s.build.map(x => `<li>${x}</li>`).join("")}</ul>`;
+      if (s.deliverables) body += `<h4>📦 Deliverables</h4><ul>${s.deliverables.map(x => `<li>${x}</li>`).join("")}</ul>`;
+      if (s.interview && s.interview.length) {
+        body += `<h4>🎤 Interview Questions</h4><div class="interview-q">${s.interview.map(x => `• ${x}`).join("<br/>")}</div>`;
+      }
+      if (s.job) {
+        body += `<h4>💼 Your Job</h4><div class="job-section"><strong>Why this matters for hiring:</strong> ${s.job}</div>`;
+      }
+      if (s.linkedin) {
+        body += `<h4>📣 LinkedIn Post Prompt</h4>
+        <div class="linkedin-section">
+          <div class="li-title">
+            <span>Copy → paste into ChatGPT/Claude to generate your post</span>
+            <button class="copy-li-btn" onclick="copyLi('li-${s.num}', this)">📋 Copy</button>
+          </div>
+          <pre id="li-${s.num}">${s.linkedin}</pre>
+        </div>`;
+      }
+
+      sessionsHTML += `
+        <div class="session ${done ? "done" : ""} ${s.jobprep ? "jobprep" : ""} ${collapsed ? "collapsed" : ""}" data-key="${key}">
+          <div class="session-header" onclick="toggleSession('${s.num}', event)">
+            <input type="checkbox" class="session-check" ${done ? "checked" : ""} onclick="toggleDone('${s.num}', event)" />
+            <div class="session-title"><span class="session-num">S${s.num}</span>${s.title}</div>
+          </div>
+          <div class="session-body">${body}</div>
+        </div>`;
+    });
+
+    div.innerHTML = `
+      <div class="module-header" onclick="toggleModule(${mi})">
+        <h2>${mod.module}</h2>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <span class="count">${sessionCount} sessions</span>
+          <span class="arrow">▼</span>
         </div>
-        <a href="https://wa.me/918530139154" target="_blank" class="footer-whatsapp-btn">
-            <i class="fa-brands fa-whatsapp" style="font-size: 1rem;"></i> Chat
-        </a>
-    </div>
+      </div>
+      <div class="module-body">${sessionsHTML}</div>`;
+    root.appendChild(div);
+  });
 
-    <!-- Fullscreen Image Modal -->
-    <div class="modal-lightbox" id="modalLightbox" onclick="closePhotoModal()">
-        <span class="modal-close-btn">&times;</span>
-        <img id="modalImg" src="" alt="Full Screen View">
-    </div>
+  updateProgress(totalSessions);
+}
 
-    <!-- Scripts -->
-    <script>
-        // Mobile Navigation Toggle Logic
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            const menuIcon = document.getElementById('menuIcon');
-            navLinks.classList.toggle('active');
+function toggleModule(mi) {
+  document.querySelector(`.module[data-module="${mi}"]`).classList.toggle("collapsed");
+}
 
-            if (navLinks.classList.contains('active')) {
-                menuIcon.classList.remove('fa-bars');
-                menuIcon.classList.add('fa-xmark');
-            } else {
-                menuIcon.classList.remove('fa-xmark');
-                menuIcon.classList.add('fa-bars');
-            }
-        }
+function toggleSession(num, e) {
+  if (e.target.classList.contains("session-check")) return;
+  const el = document.querySelector(`.session[data-key="s-${num}"]`);
+  el.classList.toggle("collapsed");
+  progress[`c-${num}`] = el.classList.contains("collapsed");
+  saveProgress();
+}
 
-        // Fullscreen Lightbox Logic
-        function openPhotoModal(imgSrc) {
-            const modal = document.getElementById('modalLightbox');
-            const modalImg = document.getElementById('modalImg');
-            modalImg.src = imgSrc;
-            modal.classList.add('active');
-        }
+function toggleDone(num, e) {
+  e.stopPropagation();
+  const el = document.querySelector(`.session[data-key="s-${num}"]`);
+  const checked = e.target.checked;
+  progress[`s-${num}`] = checked;
+  el.classList.toggle("done", checked);
+  saveProgress();
+  updateProgress();
+}
 
-        function closePhotoModal() {
-            const modal = document.getElementById('modalLightbox');
-            modal.classList.remove('active');
-        }
+function updateProgress(total) {
+  if (!total) total = document.querySelectorAll(".session").length;
+  const done = Object.keys(progress).filter(k => k.startsWith("s-") && progress[k]).length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById("progressText").textContent = `${done} / ${total} sessions`;
+  document.getElementById("progressPct").textContent = `${pct}%`;
+  document.getElementById("progressFill").style.width = `${pct}%`;
+}
 
-        // Canvas Particle Effect
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let particlesArray = [];
-        const numberOfParticles = 40;
+function expandAll() {
+  document.querySelectorAll(".module").forEach(m => m.classList.remove("collapsed"));
+  document.querySelectorAll(".session").forEach(s => {
+    s.classList.remove("collapsed");
+    progress[`c-${s.dataset.key.replace("s-", "")}`] = false;
+  });
+  saveProgress();
+}
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+function collapseAll() {
+  document.querySelectorAll(".module").forEach(m => m.classList.add("collapsed"));
+  document.querySelectorAll(".session").forEach(s => {
+    s.classList.add("collapsed");
+    progress[`c-${s.dataset.key.replace("s-", "")}`] = true;
+  });
+  saveProgress();
+}
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.3;
-                this.speedY = (Math.random() - 0.5) * 0.3;
-                this.opacity = Math.random() * 0.5 + 0.2;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+function resetProgress() {
+  if (confirm("Reset all progress? This cannot be undone.")) {
+    progress = {};
+    saveProgress();
+    render();
+  }
+}
 
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-            }
-            draw() {
-                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
+function copyPrompt(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = "✅ Copied!";
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
 
-        function initParticles() {
-            particlesArray = [];
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-        initParticles();
+function copyLi(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = "✅ Copied!";
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particlesArray.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
+document.getElementById("search").addEventListener("input", (e) => {
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll(".session").forEach(s => {
+    const match = s.textContent.toLowerCase().includes(q);
+    s.style.display = match ? "" : "none";
+  });
+  document.querySelectorAll(".module").forEach(m => {
+    const visible = [...m.querySelectorAll(".session")].some(s => s.style.display !== "none");
+    m.style.display = visible ? "" : "none";
+    if (q && visible) m.classList.remove("collapsed");
+  });
+});
 
-        // Reveal-on-Scroll Logic
-        function revealOnScroll() {
-            const reveals = document.querySelectorAll('.reveal');
-            reveals.forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('active');
-                }, index * 100);
-            });
-        }
-        window.addEventListener('load', revealOnScroll);
-    </script>
+render();
+</script>
 </body>
 </html>
